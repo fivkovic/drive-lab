@@ -51,11 +51,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.kie</groupId>
@@ -105,15 +100,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>enforce-quickstart-realm-file-exist</id>
-                        <phase>validate</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
