@@ -1,0 +1,39 @@
+version: '3.7'
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+
+  iam-db:
+    image: postgres:12.2-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: drivelab_keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+
+  iam-keycloak:
+    user: root
+    image: quay.io/keycloak/keycloak:9.0.2
+    # command: -Dkeycloak.profile.feature.upload_scripts=enabled -b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/realm-export.json
+    command: -Dkeycloak.profile.feature.upload_scripts=enabled
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_HTTP_PORT: 8180
+      KEYCLOAK_HTTPS_PORT: 8443
+      DB_VENDOR: POSTGRES
+      DB_ADDR: iam-db
+      DB_DATABASE: drivelab_keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+    ports:
+      - 8180:8080
+      - 8443:8443
+    # volumes:
+    #   - ./keycloak/imports:/opt/jboss/keycloak/imports
+    depends_on:
+      - iam-db
