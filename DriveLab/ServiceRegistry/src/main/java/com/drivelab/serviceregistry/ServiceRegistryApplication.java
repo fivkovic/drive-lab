@@ -1,4 +1,4 @@
-package com.defencefirst.serviceregistry;
+package com.drivelab.serviceregistry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
