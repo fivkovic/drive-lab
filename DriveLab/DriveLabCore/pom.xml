@@ -80,9 +80,9 @@
 
         <!-- RULES LIBRARY -->
         <dependency>
-            <groupId>sbz.drivelab</groupId>
-            <artifactId>drive-lab-kjar</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.drivelab</groupId>
+            <artifactId>drive-lab-rules</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
 
