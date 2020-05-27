@@ -42,4 +42,8 @@ public class CarPart {
     // @JsonIgnore                      // TODO: Add JSON ignore if required
     private Integer stockCount;
 
+    @Column
+    @NotNull
+    // @JsonIgnore                      // TODO: Add JSON ignore if required
+    private Integer stockLowerBound;
 }
