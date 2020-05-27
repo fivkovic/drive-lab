@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 public class VehicleManufacturer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
