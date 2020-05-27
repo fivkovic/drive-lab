@@ -29,6 +29,10 @@ public class CarPart {
     private CarPartType carPartType;
 
     @Column
+    @Enumerated(EnumType.STRING)
+    private CarPartGroup carPartGroup;
+
+    @Column
     @NotNull
     private BigDecimal salesPrice;
 
