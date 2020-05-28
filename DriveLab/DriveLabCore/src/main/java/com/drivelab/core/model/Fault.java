@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -33,4 +34,12 @@ public class Fault {
     @OneToMany(mappedBy = "fault", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SymptomAndFault> symptoms;
 
+    public Fault(Fault fault) {
+        this.id = fault.getId();
+        this.name = fault.getName();
+        this.description = fault.getDescription();
+        this.faultGroup = fault.getFaultGroup();
+        this.symptoms = new HashSet<>();
+        fault.getSymptoms().forEach(symptomAndFault -> this.symptoms.add(new SymptomAndFault(symptomAndFault)));
+    }
 }

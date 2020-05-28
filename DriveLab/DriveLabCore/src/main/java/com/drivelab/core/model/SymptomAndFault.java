@@ -25,4 +25,10 @@ public class SymptomAndFault {
     @ManyToOne
     @JoinColumn
     private Fault fault;
+
+    public SymptomAndFault(SymptomAndFault symptomAndFault) {
+        this.id = symptomAndFault.getId();
+        this.symptom = new Symptom(symptomAndFault.getSymptom());
+        this.fault = null;
+    }
 }

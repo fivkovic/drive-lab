@@ -43,10 +43,12 @@ public class RepairShop {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
+    @JsonIgnore
     private Set<VehicleManufacturer> authorizedFor;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
+    @JsonIgnore
     private Set<CarPart> partsStock;
 }
