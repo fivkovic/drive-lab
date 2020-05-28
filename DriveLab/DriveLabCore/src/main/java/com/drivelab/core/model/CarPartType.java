@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum CarPartType {
     UNIVERSAL(0, "Universal"),
     MODEL_SPECIFIC(1, "Model specific"),
-    CUSTOM(2, "Custom");
+    LABOR(2, "Labor");
 
     private final int code;
     private final String name;
