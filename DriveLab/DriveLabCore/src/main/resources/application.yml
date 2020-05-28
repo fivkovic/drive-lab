@@ -23,3 +23,8 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+
+rules:
+  groupId: com.drivelab
+  artifactId: drive-lab-rules
+  version: 0.0.1-SNAPSHOT
