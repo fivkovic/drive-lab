@@ -1,6 +1,7 @@
 package com.drivelab.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class CarPart {
@@ -20,7 +22,7 @@ public class CarPart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column
     @NotEmpty
     private String name;
 
