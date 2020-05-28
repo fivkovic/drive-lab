@@ -1,5 +1,6 @@
 package com.drivelab.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,17 @@ public class RepairShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Column(unique = true)
+    private String username;
+
+    @NotEmpty
+    @JsonIgnore
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column
     @NotEmpty
