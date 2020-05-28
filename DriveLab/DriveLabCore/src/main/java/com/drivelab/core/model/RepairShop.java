@@ -1,5 +1,6 @@
 package com.drivelab.core.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class RepairShop {
@@ -26,9 +28,13 @@ public class RepairShop {
     @NotEmpty
     private String address;
 
-    // TODO: Inspect if mapping is good
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private Set<VehicleManufacturer> authorizedFor;
 
-    // TODO: Add car parts stock
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
+    private Set<CarPart> partsStock;
 }
