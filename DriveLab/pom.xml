@@ -26,7 +26,6 @@
 
     <modules>
         <module>ServiceRegistry</module>
-        <module>APIGateway</module>
         <module>DriveLabCore</module>
         <module>DriveLabRules</module>
     </modules>
