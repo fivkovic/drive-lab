@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -36,20 +37,21 @@ public class CarPart {
 
     @Column
     @NotNull
+    @Min(0)
     private BigDecimal salesPrice;
 
     @Column
     @NotNull
-    @JsonIgnore
+    @Min(0)
     private BigDecimal purchasePrice;
 
     @Column
     @NotNull
-    @JsonIgnore
+    @Min(0)
     private Integer stockCount;
 
     @Column
     @NotNull
-    @JsonIgnore
+    @Min(0)
     private Integer stockLowerBound;
 }
