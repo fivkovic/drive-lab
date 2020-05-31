@@ -56,7 +56,9 @@ export default {
     const authenticatedUser = localStorage.getItem("authenticated-user");
 
     if (!authenticatedUser) {
-      this.$router.push("/log-in")
+      if(this.$router.currentRoute.name != "LogIn") {
+        this.$router.push("/log-in")
+      }
     } else {
       this.$store.commit("setRepairShopRole", JSON.parse(authenticatedUser).repairShopRole);
 
