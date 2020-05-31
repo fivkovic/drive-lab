@@ -20,10 +20,6 @@ public class Repair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @NotNull
-    private Date performedOn;
-
     @ManyToOne
     @JoinColumn
     private Vehicle vehicle;
@@ -39,4 +35,12 @@ public class Repair {
 
     @NotNull
     private BigDecimal totalPrice;
+
+    @ManyToOne
+    @JoinColumn
+    private RepairShop performedAt;
+
+    @Column
+    @NotNull
+    private Date performedOn;
 }

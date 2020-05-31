@@ -22,6 +22,9 @@ public class SymptomAndFault {
     @JoinColumn
     private Symptom symptom;
 
+    @Column
+    private Boolean isCharacteristic;
+
     @ManyToOne
     @JoinColumn
     private Fault fault;
@@ -29,6 +32,7 @@ public class SymptomAndFault {
     public SymptomAndFault(SymptomAndFault symptomAndFault) {
         this.id = symptomAndFault.getId();
         this.symptom = new Symptom(symptomAndFault.getSymptom());
+        this.isCharacteristic = symptomAndFault.getIsCharacteristic();
         this.fault = null;
     }
 }

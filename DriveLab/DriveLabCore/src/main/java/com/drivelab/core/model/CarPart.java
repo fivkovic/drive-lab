@@ -40,16 +40,16 @@ public class CarPart {
 
     @Column
     @NotNull
-    // @JsonIgnore                      // TODO: Add JSON ignore if required
+    @JsonIgnore
     private BigDecimal purchasePrice;
 
     @Column
     @NotNull
-    // @JsonIgnore                      // TODO: Add JSON ignore if required
+    @JsonIgnore
     private Integer stockCount;
 
     @Column
     @NotNull
-    // @JsonIgnore                      // TODO: Add JSON ignore if required
+    @JsonIgnore
     private Integer stockLowerBound;
 }

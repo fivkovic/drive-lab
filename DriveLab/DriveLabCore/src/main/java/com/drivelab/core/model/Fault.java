@@ -29,7 +29,8 @@ public class Fault {
 
     @Column
     @NotNull
-    private Integer faultGroup;
+    @Enumerated(EnumType.STRING)
+    private FaultGroup faultGroup;
 
     @OneToMany(mappedBy = "fault", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SymptomAndFault> symptoms;

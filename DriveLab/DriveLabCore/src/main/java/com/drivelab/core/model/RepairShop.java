@@ -21,16 +21,18 @@ public class RepairShop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     @Column(unique = true)
+    @NotEmpty
     private String username;
 
     @NotEmpty
     @JsonIgnore
     private String password;
 
+    @Column
+    @NotEmpty
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private RepairShopRole repairShopRole;
 
     @Column
     @NotEmpty

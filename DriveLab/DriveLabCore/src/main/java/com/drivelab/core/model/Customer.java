@@ -27,7 +27,7 @@ public class Customer {
     @NotEmpty
     private String lastName;
 
-    @Column(unique = true)
+    @Column
     private String phoneNumber;
 
     @Column(unique = true)

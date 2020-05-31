@@ -22,6 +22,10 @@ public class Vehicle {
 
     @ManyToOne
     @JoinColumn
+    private Customer owner;
+
+    @ManyToOne
+    @JoinColumn
     private VehicleManufacturer manufacturer;
 
     @NotEmpty
@@ -33,6 +37,7 @@ public class Vehicle {
     @NotNull
     private Integer mileage;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
@@ -45,8 +50,4 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Repair> repairs;
-
-    @ManyToOne
-    @JoinColumn
-    private Customer owner;
 }

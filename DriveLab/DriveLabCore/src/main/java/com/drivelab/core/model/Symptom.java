@@ -28,12 +28,12 @@ public class Symptom {
     private String description;
 
     @OneToMany(mappedBy = "symptom", fetch = FetchType.EAGER)
-    private Set<SymptomAndFault> diseases;
+    private Set<SymptomAndFault> symptomsAndFaults;
 
     public Symptom(Symptom symptom) {
         this.id = symptom.getId();
         this.name = symptom.getName();
         this.description = symptom.getDescription();
-        this.diseases = null;
+        this.symptomsAndFaults = null;
     }
 }
