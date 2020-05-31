@@ -1,23 +1,34 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import LogIn from '../views/LogIn.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const getRepairShopRole = () => {
+  const authenticatedUser = localStorage.getItem("authenticated-user");
+  if (authenticatedUser) {
+      return JSON.parse(authenticatedUser).repairShopRole;
+  }
+  return '';
+}
+
+const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'REPAIR_SHOP');
+    }
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/log-in',
+    name: 'LogIn',
+    component: LogIn
+  },
+
+
 ]
 
 const router = new VueRouter({
