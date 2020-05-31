@@ -30,7 +30,6 @@ public class RepairShop {
     private String password;
 
     @Column
-    @NotEmpty
     @Enumerated(EnumType.STRING)
     private RepairShopRole repairShopRole;
 
