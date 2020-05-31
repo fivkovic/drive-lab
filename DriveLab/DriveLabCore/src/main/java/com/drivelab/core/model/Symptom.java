@@ -1,5 +1,6 @@
 package com.drivelab.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Symptom {
     private String description;
 
     @OneToMany(mappedBy = "symptom", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<SymptomAndFault> symptomsAndFaults;
 
     public Symptom(Symptom symptom) {
