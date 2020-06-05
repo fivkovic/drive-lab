@@ -87,7 +87,7 @@ export default {
       e.preventDefault();
       DiagnosticsService.sendDiagnosticsRequest(this.diagnosticsRequest, result => {
           const data = result.data;
-          this.toast(`${data.disease.name} (${data.percentageMatched})`);
+          this.$swal.fire("Fault found",`${data.fault.name} (${data.probability * 100}%)`, 'success');
         }, error => {
           this.$swal.fire("Error", error.data.message, 'error');
         }
