@@ -2,10 +2,9 @@ package com.drivelab.core.controller;
 
 import com.drivelab.core.dto.AuthenticationRequest;
 import com.drivelab.core.model.RepairShop;
-import com.drivelab.core.service.ReasoningService;
+import com.drivelab.core.service.DiagnosticsService;
 import com.drivelab.core.service.RepairShopService;
 import org.kie.api.runtime.KieSession;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,22 +28,22 @@ public class AuthenticationController {
 
     private final RepairShopService repairShopService;
     private final KieBase kieBase;
-    private final ReasoningService reasoningService;
+    private final DiagnosticsService diagnosticsService;
 
     @PostMapping
     public ResponseEntity authenticate(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
         final RepairShop repairShop = this.repairShopService.findByUsernameAndPassword(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final KieSession kieSession = kieBase.newKieSession();
         final Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>() {{
-            add(new SimpleGrantedAuthority(repairShop.getRole().name()));
+            add(new SimpleGrantedAuthority(repairShop.getRepairShopRole().name()));
         }};
 
         final Authentication authentication = new PreAuthenticatedAuthenticationToken(kieSession, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        this.reasoningService.initializeKieSession();
+        this.diagnosticsService.initializeKieSession();
 
-        return new ResponseEntity<>(repairShop, HttpStatus.OK);
+        return ResponseEntity.ok(repairShop);
     }
 
     @PutMapping
