@@ -55,8 +55,7 @@ public class DiagnosticsService {
         kieSession.fireAllRules();
 
         // STEP 5: Get diagnostics result
-        final Collection<?> temp = kieSession.getObjects();
-        final Collection<?> kieSessionObjects = temp.stream().filter(object -> object instanceof DiagnosticsResult).collect(Collectors.toSet());
+        final Collection<?> kieSessionObjects = kieSession.getObjects(object -> object instanceof DiagnosticsResult);
         if (kieSessionObjects == null || kieSessionObjects.isEmpty()) throw new NotFoundException("Diagnostic session returned 0 results.");
 
         // STEP 6: Cast from object to DiagnosticsResult instance
