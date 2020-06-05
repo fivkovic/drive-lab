@@ -6,7 +6,11 @@
         <b-navbar-brand to="/">DriveLab</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse">
 
-          <!-- TODO: Add routes for CRUD  primary, success, info, warning, danger, dark, or light-->
+          <b-navbar-nav>
+            <!-- TODO: Add routes for CRUD -->
+            <b-nav-item v-if="isClassicRepairShop()" to="/diagnostics">Diagnostics</b-nav-item>
+          </b-navbar-nav>
+
 
           <b-navbar-nav class="ml-auto">
             <b-nav-item v-if="isAuthenticated()" v-on:click="logOut()">Log Out</b-nav-item>

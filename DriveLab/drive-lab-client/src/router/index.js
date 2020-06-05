@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import LogIn from '../views/LogIn.vue'
+import Diagnostics from '../views/Diagnostics.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const getRepairShopRole = () => {
 
 const routes = [
   {
+    path: '/log-in',
+    name: 'LogIn',
+    component: LogIn
+  },
+  {
     path: '/',
     name: 'Home',
     component: Home,
@@ -23,9 +29,12 @@ const routes = [
     }
   },
   {
-    path: '/log-in',
-    name: 'LogIn',
-    component: LogIn
+    path: '/diagnostics',
+    name: 'Diagnostics',
+    component: Diagnostics,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'REPAIR_SHOP');
+    }
   },
 
 
