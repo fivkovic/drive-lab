@@ -23,6 +23,9 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final SymptomRepository symptomRepository;
     private final FaultRepository faultRepository;
 
+    private final CustomerRepository customerRepository;
+    private final VehicleRepository vehicleRepository;
+
 
     private final PasswordEncoder passwordEncoder;
 
@@ -753,6 +756,23 @@ public class DatabaseInitializer implements ApplicationRunner {
         faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom7, true, faultySuspension));
         faultySuspension.getSymptoms().addAll(faultySuspensionSymptoms);
         faultySuspension = this.faultRepository.save(faultySuspension);
+
+        Customer customer1 = new Customer(null, "John", "Smith", "+38163123123", "john@smith.com", new HashSet<>());
+        Vehicle vehicle1 = new Vehicle(null, customer1, this.vehicleManufacturerRepository.findById(4L).get(), "A6", 2008, 143654, EngineType.DIESEL, "NS-001-JS", "A6NS001JS", new HashSet<>());
+        Vehicle vehicle2 = new Vehicle(null, customer1, this.vehicleManufacturerRepository.findById(34L).get(), "CLK 200", 2014, 76345, EngineType.GASOLINE, "NS-002-JS", "CLKNS002JS", new HashSet<>());
+        customer1.getOwnedVehicles().add(vehicle1);
+        customer1.getOwnedVehicles().add(vehicle2);
+        this.customerRepository.save(customer1);
+
+        Customer customer2 = new Customer(null, "Alice", "McEnany", "+381644455123", "alice@mcenany.com", new HashSet<>());
+        Vehicle vehicle3 = new Vehicle(null, customer2, this.vehicleManufacturerRepository.findById(42L).get(), "Clio", 2005, 250345, EngineType.GAS, "NS-001-AM", "CLIONS001AM", new HashSet<>());
+        customer2.getOwnedVehicles().add(vehicle3);
+        this.customerRepository.save(customer2);
+
+        Customer customer3 = new Customer(null, "Mark", "Johnson", "+381601234567", "mark@johnson.com", new HashSet<>());
+        Vehicle vehicle4 = new Vehicle(null, customer3, this.vehicleManufacturerRepository.findById(32L).get(), "6", 2009, 190563, EngineType.DIESEL, "NS-001-MJ", "6NS001MJ", new HashSet<>());
+        customer3.getOwnedVehicles().add(vehicle4);
+        this.customerRepository.save(customer3);
 
     }
 
