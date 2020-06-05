@@ -21,6 +21,8 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final RepairShopRepository repairShopRepository;
 
     private final SymptomRepository symptomRepository;
+    private final FaultRepository faultRepository;
+
 
     private final PasswordEncoder passwordEncoder;
 
@@ -621,6 +623,136 @@ public class DatabaseInitializer implements ApplicationRunner {
         final Symptom symptom5 = this.symptomRepository.save(new Symptom(null, "Vehicle has aftermarket parts fitted", "TODO", new HashSet<>()));
         final Symptom symptom6 = this.symptomRepository.save(new Symptom(null, "Tire-wear related fault occured in the last 3 months", "TODO", new HashSet<>()));
         final Symptom symptom7 = this.symptomRepository.save(new Symptom(null, "Performed repair in the last 4 months where universal parts were used", "TODO", new HashSet<>()));
+
+        // ============================================================================================================
+        // Faults initialization
+        // ============================================================================================================
+        Fault brokenSteeringRack = new Fault(
+                null,
+                "Broken steering rack",
+                "The entire steering rack unit will need to be replaced.",
+                FaultGroup.FIRST,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> brokenSteeringRackSymptoms = new HashSet<>();
+        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomA, false, brokenSteeringRack));
+        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomB, false, brokenSteeringRack));
+        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomC, false, brokenSteeringRack));
+        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomD, false, brokenSteeringRack));
+        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomE, false, brokenSteeringRack));
+        brokenSteeringRack.getSymptoms().addAll(brokenSteeringRackSymptoms);
+        brokenSteeringRack = this.faultRepository.save(brokenSteeringRack);
+
+        Fault unbalancedTires = new Fault(
+                null,
+                "Unbalanced tires",
+                "There is a tire balancing issue. Have a mechanic balance the wheels in question and replace any overly worn tires.",
+                FaultGroup.FIRST,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> unbalancedTiresSymptoms = new HashSet<>();
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomZ, false, unbalancedTires));
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomB, false, unbalancedTires));
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomE, false, unbalancedTires));
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomG, false, unbalancedTires));
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomA, false, unbalancedTires));
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomC, false, unbalancedTires));
+        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomF, false, unbalancedTires));
+        unbalancedTires.getSymptoms().addAll(unbalancedTiresSymptoms);
+        unbalancedTires = this.faultRepository.save(unbalancedTires);
+
+        Fault wornOutShocks = new Fault(
+                null,
+                "Worn out shocks",
+                "Either your front or rear shocks or strut cartridges are worn/faulty. Have them inspected and replaced if needed.",
+                FaultGroup.FIRST,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> wornOutShocksSymptoms = new HashSet<>();
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomB, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomH, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomC, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomI, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomF, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomJ, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomK, false, wornOutShocks));
+        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomL, false, wornOutShocks));
+        wornOutShocks.getSymptoms().addAll(wornOutShocksSymptoms);
+        wornOutShocks = this.faultRepository.save(wornOutShocks);
+
+        Fault badWheelAlignment = new Fault(
+                null,
+                "Bad wheel alignment",
+                "You'll need to have an alignment job done on your vehicle.",
+                FaultGroup.FIRST,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> badWheelAlignmentSymptoms = new HashSet<>();
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomM, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomC, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomX, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomL, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomY, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomG, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomA, false, badWheelAlignment));
+        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptom1, false, badWheelAlignment));
+        badWheelAlignment.getSymptoms().addAll(badWheelAlignmentSymptoms);
+        badWheelAlignment = this.faultRepository.save(badWheelAlignment);
+
+        Fault badCylinderHead = new Fault(
+                null,
+                "Bad cylinder head",
+                "It seems like the engine cylinder head will need a repair or replacement.",
+                FaultGroup.SECOND,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> badCylinderHeadSymptoms = new HashSet<>();
+        badCylinderHeadSymptoms.add(new SymptomAndFault(null, symptom2, false, badCylinderHead));
+        badCylinderHead.getSymptoms().addAll(badCylinderHeadSymptoms);
+        badCylinderHead = this.faultRepository.save(badCylinderHead);
+
+        Fault brakeSystemLeak = new Fault(
+                null,
+                "Brake system leak",
+                "This is often caused by air bubbles forming in the brake lines. If the brakes were recently worked on, maybe the mechanic did not fully \"bleed\" the brake system. Or worse, there could be a leak somewhere in the system which is allowing air to enter.",
+                FaultGroup.SECOND,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> brakeSystemLeakSymptoms = new HashSet<>();
+        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomN, false, brakeSystemLeak));
+        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomO, false, brakeSystemLeak));
+        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomP, false, brakeSystemLeak));
+        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomQ, false, brakeSystemLeak));
+        brakeSystemLeak.getSymptoms().addAll(brakeSystemLeakSymptoms);
+        brakeSystemLeak = this.faultRepository.save(brakeSystemLeak);
+
+        Fault problematicVehicleModel = new Fault(
+                null,
+                "Problematic vehicle model",
+                "It seems that this vehicle has chronic and persistent issues. Please contact your dealership to seek for advice.",
+                FaultGroup.THIRD,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> problematicVehicleModelSymptoms = new HashSet<>();
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomP, false, problematicVehicleModel));
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomR, false, problematicVehicleModel));
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomS, false, problematicVehicleModel));
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomT, false, problematicVehicleModel));
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomU, false, problematicVehicleModel));
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptom3, true, problematicVehicleModel));
+        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptom4, true, problematicVehicleModel));
+        problematicVehicleModel.getSymptoms().addAll(problematicVehicleModelSymptoms);
+        problematicVehicleModel = this.faultRepository.save(problematicVehicleModel);
+
+        Fault faultySuspension = new Fault(
+                null,
+                "Faulty suspension",
+                "Worn out steering and front suspension components are the issue. Have a mechanic inspect this vehicle and make any necessary repairs.",
+                FaultGroup.THIRD,
+                new HashSet<SymptomAndFault>());
+        final Set<SymptomAndFault> faultySuspensionSymptoms = new HashSet<>();
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomP, false, faultySuspension));
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomT, false, faultySuspension));
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomS, false, faultySuspension));
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomV, false, faultySuspension));
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom5, true, faultySuspension));
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom6, true, faultySuspension));
+        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom7, true, faultySuspension));
+        faultySuspension.getSymptoms().addAll(faultySuspensionSymptoms);
+        faultySuspension = this.faultRepository.save(faultySuspension);
 
     }
 
