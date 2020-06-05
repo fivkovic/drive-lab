@@ -1,6 +1,6 @@
 package com.drivelab.core.dto;
 
-import com.drivelab.core.model.Symptom;
+import com.drivelab.core.model.Problem;
 import com.drivelab.core.model.Vehicle;
 import lombok.*;
 
@@ -17,5 +17,5 @@ public class DiagnosticsRequest {
     private Vehicle vehicle;
 
     @NotNull
-    private List<Symptom> symptoms;
+    private List<Problem> problems;
 }

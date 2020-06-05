@@ -20,7 +20,7 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final CarPartRepository carPartRepository;
     private final RepairShopRepository repairShopRepository;
 
-    private final SymptomRepository symptomRepository;
+    private final ProblemRepository problemRepository;
     private final FaultRepository faultRepository;
 
     private final CustomerRepository customerRepository;
@@ -590,42 +590,42 @@ public class DatabaseInitializer implements ApplicationRunner {
         final RepairShop repairShop2 = this.repairShopRepository.save(new RepairShop(null,"drivelab2", this.passwordEncoder.encode("123"), RepairShopRole.REPAIR_SHOP, "DriveLab NS #2", "Narodnog Fronta 28, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
 
         // ============================================================================================================
-        // Symptoms initialization
+        // Problems initialization
         // ============================================================================================================
-        final Symptom symptomA = this.symptomRepository.save(new Symptom(null, "Steering wheel does not return to normal position", "TODO", new HashSet<>()));
-        final Symptom symptomB = this.symptomRepository.save(new Symptom(null, "Front end vibrations", "TODO", new HashSet<>()));
-        final Symptom symptomC = this.symptomRepository.save(new Symptom(null, "Rattling noise", "TODO", new HashSet<>()));
-        final Symptom symptomD = this.symptomRepository.save(new Symptom(null, "Steering wheel hard to turn", "TODO", new HashSet<>()));
-        final Symptom symptomE = this.symptomRepository.save(new Symptom(null, "Clunking sound when driving over bumps", "TODO", new HashSet<>()));
-        final Symptom symptomF = this.symptomRepository.save(new Symptom(null, "Loose springs", "TODO", new HashSet<>()));
-        final Symptom symptomG = this.symptomRepository.save(new Symptom(null, "Outside edge tire wear", "TODO", new HashSet<>()));
-        final Symptom symptomH = this.symptomRepository.save(new Symptom(null, "Loose caliper bolts", "TODO", new HashSet<>()));
-        final Symptom symptomI = this.symptomRepository.save(new Symptom(null, "Inside edge tire wear", "TODO", new HashSet<>()));
-        final Symptom symptomJ = this.symptomRepository.save(new Symptom(null, "Vehicle uncomfortable", "TODO", new HashSet<>()));
-        final Symptom symptomK = this.symptomRepository.save(new Symptom(null, "Power steering fluid level low", "TODO", new HashSet<>()));
-        final Symptom symptomL = this.symptomRepository.save(new Symptom(null, "Abnormal steering when exiting a turn", "TODO", new HashSet<>()));
-        final Symptom symptomM = this.symptomRepository.save(new Symptom(null, "Car pulls to one side", "TODO", new HashSet<>()));
-        final Symptom symptomN = this.symptomRepository.save(new Symptom(null, "Low brake fluid level", "TODO", new HashSet<>()));
-        final Symptom symptomO = this.symptomRepository.save(new Symptom(null, "Brake warning light on", "TODO", new HashSet<>()));
-        final Symptom symptomP = this.symptomRepository.save(new Symptom(null, "Brake discs unevenly worn out", "TODO", new HashSet<>()));
-        final Symptom symptomQ = this.symptomRepository.save(new Symptom(null, "Extended brake pedal travel", "TODO", new HashSet<>()));
-        final Symptom symptomR = this.symptomRepository.save(new Symptom(null, "Engine power loss occurring randomly", "TODO", new HashSet<>()));
-        final Symptom symptomS = this.symptomRepository.save(new Symptom(null, "Brakes make squealing noise when used", "TODO", new HashSet<>()));
-        final Symptom symptomT = this.symptomRepository.save(new Symptom(null, "Vehicle shaking during normal driving", "TODO", new HashSet<>()));
-        final Symptom symptomU = this.symptomRepository.save(new Symptom(null, "Engine backfiring", "TODO", new HashSet<>()));
-        final Symptom symptomV = this.symptomRepository.save(new Symptom(null, "Steering feels loose", "TODO", new HashSet<>()));
-        // final Symptom symptomW = this.symptomRepository.save(new Symptom(null, "", "", new HashSet<>()));
-        final Symptom symptomX = this.symptomRepository.save(new Symptom(null, "One wheel locking up", "TODO", new HashSet<>()));
-        final Symptom symptomY = this.symptomRepository.save(new Symptom(null, "Tires unevenly inflated", "TODO", new HashSet<>()));
-        final Symptom symptomZ = this.symptomRepository.save(new Symptom(null, "No consistency tire wear", "TODO", new HashSet<>()));
+        final Problem problemA = this.problemRepository.save(new Problem(null, "Steering wheel does not return to normal position", "TODO", new HashSet<>()));
+        final Problem problemB = this.problemRepository.save(new Problem(null, "Front end vibrations", "TODO", new HashSet<>()));
+        final Problem problemC = this.problemRepository.save(new Problem(null, "Rattling noise", "TODO", new HashSet<>()));
+        final Problem problemD = this.problemRepository.save(new Problem(null, "Steering wheel hard to turn", "TODO", new HashSet<>()));
+        final Problem problemE = this.problemRepository.save(new Problem(null, "Clunking sound when driving over bumps", "TODO", new HashSet<>()));
+        final Problem problemF = this.problemRepository.save(new Problem(null, "Loose springs", "TODO", new HashSet<>()));
+        final Problem problemG = this.problemRepository.save(new Problem(null, "Outside edge tire wear", "TODO", new HashSet<>()));
+        final Problem problemH = this.problemRepository.save(new Problem(null, "Loose caliper bolts", "TODO", new HashSet<>()));
+        final Problem problemI = this.problemRepository.save(new Problem(null, "Inside edge tire wear", "TODO", new HashSet<>()));
+        final Problem problemJ = this.problemRepository.save(new Problem(null, "Vehicle uncomfortable", "TODO", new HashSet<>()));
+        final Problem problemK = this.problemRepository.save(new Problem(null, "Power steering fluid level low", "TODO", new HashSet<>()));
+        final Problem problemL = this.problemRepository.save(new Problem(null, "Abnormal steering when exiting a turn", "TODO", new HashSet<>()));
+        final Problem problemM = this.problemRepository.save(new Problem(null, "Car pulls to one side", "TODO", new HashSet<>()));
+        final Problem problemN = this.problemRepository.save(new Problem(null, "Low brake fluid level", "TODO", new HashSet<>()));
+        final Problem problemO = this.problemRepository.save(new Problem(null, "Brake warning light on", "TODO", new HashSet<>()));
+        final Problem problemP = this.problemRepository.save(new Problem(null, "Brake discs unevenly worn out", "TODO", new HashSet<>()));
+        final Problem problemQ = this.problemRepository.save(new Problem(null, "Extended brake pedal travel", "TODO", new HashSet<>()));
+        final Problem problemR = this.problemRepository.save(new Problem(null, "Engine power loss occurring randomly", "TODO", new HashSet<>()));
+        final Problem problemS = this.problemRepository.save(new Problem(null, "Brakes make squealing noise when used", "TODO", new HashSet<>()));
+        final Problem problemT = this.problemRepository.save(new Problem(null, "Vehicle shaking during normal driving", "TODO", new HashSet<>()));
+        final Problem problemU = this.problemRepository.save(new Problem(null, "Engine backfiring", "TODO", new HashSet<>()));
+        final Problem problemV = this.problemRepository.save(new Problem(null, "Steering feels loose", "TODO", new HashSet<>()));
+        // final Problem problemW = this.problemRepository.save(new Problem(null, "", "", new HashSet<>()));
+        final Problem problemX = this.problemRepository.save(new Problem(null, "One wheel locking up", "TODO", new HashSet<>()));
+        final Problem problemY = this.problemRepository.save(new Problem(null, "Tires unevenly inflated", "TODO", new HashSet<>()));
+        final Problem problemZ = this.problemRepository.save(new Problem(null, "No consistency tire wear", "TODO", new HashSet<>()));
 
-        final Symptom symptom1 = this.symptomRepository.save(new Symptom(null, "Repaired broken steering rack or fixed unbalanced tires in last 3 months", "TODO", new HashSet<>()));
-        final Symptom symptom2 = this.symptomRepository.save(new Symptom(null, "Low engine oil level occured more than 3 times in last 6 months", "TODO", new HashSet<>()));
-        final Symptom symptom3 = this.symptomRepository.save(new Symptom(null, "Vehicle has problem with bad cylinder head for more than 6 months", "TODO", new HashSet<>()));
-        final Symptom symptom4 = this.symptomRepository.save(new Symptom(null, "Vehicle has brake system leak", "TODO", new HashSet<>()));
-        final Symptom symptom5 = this.symptomRepository.save(new Symptom(null, "Vehicle has aftermarket parts fitted", "TODO", new HashSet<>()));
-        final Symptom symptom6 = this.symptomRepository.save(new Symptom(null, "Tire-wear related fault occured in the last 3 months", "TODO", new HashSet<>()));
-        final Symptom symptom7 = this.symptomRepository.save(new Symptom(null, "Performed repair in the last 4 months where universal parts were used", "TODO", new HashSet<>()));
+        final Problem problem1 = this.problemRepository.save(new Problem(null, "Repaired broken steering rack or fixed unbalanced tires in last 3 months", "TODO", new HashSet<>()));
+        final Problem problem2 = this.problemRepository.save(new Problem(null, "Low engine oil level occured more than 3 times in last 6 months", "TODO", new HashSet<>()));
+        final Problem problem3 = this.problemRepository.save(new Problem(null, "Vehicle has problem with bad cylinder head for more than 6 months", "TODO", new HashSet<>()));
+        final Problem problem4 = this.problemRepository.save(new Problem(null, "Vehicle has brake system leak", "TODO", new HashSet<>()));
+        final Problem problem5 = this.problemRepository.save(new Problem(null, "Vehicle has aftermarket parts fitted", "TODO", new HashSet<>()));
+        final Problem problem6 = this.problemRepository.save(new Problem(null, "Tire-wear related fault occured in the last 3 months", "TODO", new HashSet<>()));
+        final Problem problem7 = this.problemRepository.save(new Problem(null, "Performed repair in the last 4 months where universal parts were used", "TODO", new HashSet<>()));
 
         // ============================================================================================================
         // Faults initialization
@@ -635,14 +635,14 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Broken steering rack",
                 "The entire steering rack unit will need to be replaced.",
                 FaultGroup.FIRST,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> brokenSteeringRackSymptoms = new HashSet<>();
-        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomA, false, brokenSteeringRack));
-        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomB, false, brokenSteeringRack));
-        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomC, false, brokenSteeringRack));
-        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomD, false, brokenSteeringRack));
-        brokenSteeringRackSymptoms.add(new SymptomAndFault(null, symptomE, false, brokenSteeringRack));
-        brokenSteeringRack.getSymptoms().addAll(brokenSteeringRackSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> brokenSteeringRackProblems = new HashSet<>();
+        brokenSteeringRackProblems.add(new ProblemAndFault(null, problemA, false, brokenSteeringRack));
+        brokenSteeringRackProblems.add(new ProblemAndFault(null, problemB, false, brokenSteeringRack));
+        brokenSteeringRackProblems.add(new ProblemAndFault(null, problemC, false, brokenSteeringRack));
+        brokenSteeringRackProblems.add(new ProblemAndFault(null, problemD, false, brokenSteeringRack));
+        brokenSteeringRackProblems.add(new ProblemAndFault(null, problemE, false, brokenSteeringRack));
+        brokenSteeringRack.getProblems().addAll(brokenSteeringRackProblems);
         brokenSteeringRack = this.faultRepository.save(brokenSteeringRack);
 
         Fault unbalancedTires = new Fault(
@@ -650,16 +650,16 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Unbalanced tires",
                 "There is a tire balancing issue. Have a mechanic balance the wheels in question and replace any overly worn tires.",
                 FaultGroup.FIRST,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> unbalancedTiresSymptoms = new HashSet<>();
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomZ, false, unbalancedTires));
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomB, false, unbalancedTires));
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomE, false, unbalancedTires));
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomG, false, unbalancedTires));
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomA, false, unbalancedTires));
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomC, false, unbalancedTires));
-        unbalancedTiresSymptoms.add(new SymptomAndFault(null, symptomF, false, unbalancedTires));
-        unbalancedTires.getSymptoms().addAll(unbalancedTiresSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> unbalancedTiresProblems = new HashSet<>();
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemZ, false, unbalancedTires));
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemB, false, unbalancedTires));
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemE, false, unbalancedTires));
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemG, false, unbalancedTires));
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemA, false, unbalancedTires));
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemC, false, unbalancedTires));
+        unbalancedTiresProblems.add(new ProblemAndFault(null, problemF, false, unbalancedTires));
+        unbalancedTires.getProblems().addAll(unbalancedTiresProblems);
         unbalancedTires = this.faultRepository.save(unbalancedTires);
 
         Fault wornOutShocks = new Fault(
@@ -667,17 +667,17 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Worn out shocks",
                 "Either your front or rear shocks or strut cartridges are worn/faulty. Have them inspected and replaced if needed.",
                 FaultGroup.FIRST,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> wornOutShocksSymptoms = new HashSet<>();
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomB, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomH, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomC, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomI, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomF, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomJ, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomK, false, wornOutShocks));
-        wornOutShocksSymptoms.add(new SymptomAndFault(null, symptomL, false, wornOutShocks));
-        wornOutShocks.getSymptoms().addAll(wornOutShocksSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> wornOutShocksProblems = new HashSet<>();
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemB, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemH, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemC, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemI, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemF, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemJ, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemK, false, wornOutShocks));
+        wornOutShocksProblems.add(new ProblemAndFault(null, problemL, false, wornOutShocks));
+        wornOutShocks.getProblems().addAll(wornOutShocksProblems);
         wornOutShocks = this.faultRepository.save(wornOutShocks);
 
         Fault badWheelAlignment = new Fault(
@@ -685,17 +685,17 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Bad wheel alignment",
                 "You'll need to have an alignment job done on your vehicle.",
                 FaultGroup.FIRST,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> badWheelAlignmentSymptoms = new HashSet<>();
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomM, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomC, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomX, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomL, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomY, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomG, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptomA, false, badWheelAlignment));
-        badWheelAlignmentSymptoms.add(new SymptomAndFault(null, symptom1, false, badWheelAlignment));
-        badWheelAlignment.getSymptoms().addAll(badWheelAlignmentSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> badWheelAlignmentProblems = new HashSet<>();
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemM, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemC, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemX, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemL, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemY, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemG, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problemA, false, badWheelAlignment));
+        badWheelAlignmentProblems.add(new ProblemAndFault(null, problem1, false, badWheelAlignment));
+        badWheelAlignment.getProblems().addAll(badWheelAlignmentProblems);
         badWheelAlignment = this.faultRepository.save(badWheelAlignment);
 
         Fault badCylinderHead = new Fault(
@@ -703,10 +703,10 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Bad cylinder head",
                 "It seems like the engine cylinder head will need a repair or replacement.",
                 FaultGroup.SECOND,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> badCylinderHeadSymptoms = new HashSet<>();
-        badCylinderHeadSymptoms.add(new SymptomAndFault(null, symptom2, false, badCylinderHead));
-        badCylinderHead.getSymptoms().addAll(badCylinderHeadSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> badCylinderHeadProblems = new HashSet<>();
+        badCylinderHeadProblems.add(new ProblemAndFault(null, problem2, false, badCylinderHead));
+        badCylinderHead.getProblems().addAll(badCylinderHeadProblems);
         badCylinderHead = this.faultRepository.save(badCylinderHead);
 
         Fault brakeSystemLeak = new Fault(
@@ -714,13 +714,13 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Brake system leak",
                 "This is often caused by air bubbles forming in the brake lines. If the brakes were recently worked on, maybe the mechanic did not fully \"bleed\" the brake system. Or worse, there could be a leak somewhere in the system which is allowing air to enter.",
                 FaultGroup.SECOND,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> brakeSystemLeakSymptoms = new HashSet<>();
-        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomN, false, brakeSystemLeak));
-        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomO, false, brakeSystemLeak));
-        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomP, false, brakeSystemLeak));
-        brakeSystemLeakSymptoms.add(new SymptomAndFault(null, symptomQ, false, brakeSystemLeak));
-        brakeSystemLeak.getSymptoms().addAll(brakeSystemLeakSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> brakeSystemLeakProblems = new HashSet<>();
+        brakeSystemLeakProblems.add(new ProblemAndFault(null, problemN, false, brakeSystemLeak));
+        brakeSystemLeakProblems.add(new ProblemAndFault(null, problemO, false, brakeSystemLeak));
+        brakeSystemLeakProblems.add(new ProblemAndFault(null, problemP, false, brakeSystemLeak));
+        brakeSystemLeakProblems.add(new ProblemAndFault(null, problemQ, false, brakeSystemLeak));
+        brakeSystemLeak.getProblems().addAll(brakeSystemLeakProblems);
         brakeSystemLeak = this.faultRepository.save(brakeSystemLeak);
 
         Fault problematicVehicleModel = new Fault(
@@ -728,16 +728,16 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Problematic vehicle model",
                 "It seems that this vehicle has chronic and persistent issues. Please contact your dealership to seek for advice.",
                 FaultGroup.THIRD,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> problematicVehicleModelSymptoms = new HashSet<>();
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomP, false, problematicVehicleModel));
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomR, false, problematicVehicleModel));
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomS, false, problematicVehicleModel));
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomT, false, problematicVehicleModel));
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptomU, false, problematicVehicleModel));
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptom3, true, problematicVehicleModel));
-        problematicVehicleModelSymptoms.add(new SymptomAndFault(null, symptom4, true, problematicVehicleModel));
-        problematicVehicleModel.getSymptoms().addAll(problematicVehicleModelSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> problematicVehicleModelProblems = new HashSet<>();
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problemP, false, problematicVehicleModel));
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problemR, false, problematicVehicleModel));
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problemS, false, problematicVehicleModel));
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problemT, false, problematicVehicleModel));
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problemU, false, problematicVehicleModel));
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problem3, true, problematicVehicleModel));
+        problematicVehicleModelProblems.add(new ProblemAndFault(null, problem4, true, problematicVehicleModel));
+        problematicVehicleModel.getProblems().addAll(problematicVehicleModelProblems);
         problematicVehicleModel = this.faultRepository.save(problematicVehicleModel);
 
         Fault faultySuspension = new Fault(
@@ -745,17 +745,21 @@ public class DatabaseInitializer implements ApplicationRunner {
                 "Faulty suspension",
                 "Worn out steering and front suspension components are the issue. Have a mechanic inspect this vehicle and make any necessary repairs.",
                 FaultGroup.THIRD,
-                new HashSet<SymptomAndFault>());
-        final Set<SymptomAndFault> faultySuspensionSymptoms = new HashSet<>();
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomP, false, faultySuspension));
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomT, false, faultySuspension));
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomS, false, faultySuspension));
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptomV, false, faultySuspension));
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom5, true, faultySuspension));
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom6, true, faultySuspension));
-        faultySuspensionSymptoms.add(new SymptomAndFault(null, symptom7, true, faultySuspension));
-        faultySuspension.getSymptoms().addAll(faultySuspensionSymptoms);
+                new HashSet<ProblemAndFault>());
+        final Set<ProblemAndFault> faultySuspensionProblems = new HashSet<>();
+        faultySuspensionProblems.add(new ProblemAndFault(null, problemP, false, faultySuspension));
+        faultySuspensionProblems.add(new ProblemAndFault(null, problemT, false, faultySuspension));
+        faultySuspensionProblems.add(new ProblemAndFault(null, problemS, false, faultySuspension));
+        faultySuspensionProblems.add(new ProblemAndFault(null, problemV, false, faultySuspension));
+        faultySuspensionProblems.add(new ProblemAndFault(null, problem5, true, faultySuspension));
+        faultySuspensionProblems.add(new ProblemAndFault(null, problem6, true, faultySuspension));
+        faultySuspensionProblems.add(new ProblemAndFault(null, problem7, true, faultySuspension));
+        faultySuspension.getProblems().addAll(faultySuspensionProblems);
         faultySuspension = this.faultRepository.save(faultySuspension);
+
+        // ============================================================================================================
+        // Customer and Vehicle initialization
+        // ============================================================================================================
 
         Customer customer1 = new Customer(null, "John", "Smith", "+38163123123", "john@smith.com", new HashSet<>());
         Vehicle vehicle1 = new Vehicle(null, customer1, this.vehicleManufacturerRepository.findById(4L).get(), "A6", 2008, 143654, EngineType.DIESEL, "NS-001-JS", "A6NS001JS", new HashSet<>());
@@ -774,6 +778,12 @@ public class DatabaseInitializer implements ApplicationRunner {
         customer3.getOwnedVehicles().add(vehicle4);
         this.customerRepository.save(customer3);
 
+        // TODO: Finish customer and vehicle initialization
+
+        // ============================================================================================================
+        // Repair history initialization
+        // ============================================================================================================
+        // TODO: Add repair history for each vehicle
     }
 
 }

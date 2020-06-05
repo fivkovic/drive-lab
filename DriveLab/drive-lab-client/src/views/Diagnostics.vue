@@ -15,12 +15,12 @@
 																					:multiple="false">
                             </multiselect>
                         </b-form-group>
-                        <b-form-group label="Symptoms">
-                            <multiselect v-model="diagnosticsRequest.symptoms"
-                                         placeholder="Select symptoms"
+                        <b-form-group label="Problems">
+                            <multiselect v-model="diagnosticsRequest.problems"
+                                         placeholder="Select problems"
                                          label="name"
                                          track-by="id"
-                                         :options="commonSymptoms"
+                                         :options="commonProblems"
                                          :multiple="true">
                             </multiselect>
                         </b-form-group>
@@ -52,17 +52,17 @@ import DataService from "../services/DataService.js";
 import DiagnosticsService from "../services/DiagnosticsService.js"
 
 const VEHICLES_URL = "/api/vehicles"
-const COMMON_SYMPTOMS_URL = "/api/symptoms"			// TODO: Change path
+const COMMON_PROBLEMS_URL = "/api/problems"			// TODO: Change path
 
 export default {
 	data() {
 		return {
 			vehicles: [],
-			commonSymptoms: [],
+			commonProblems: [],
 
 			diagnosticsRequest: {
         vehicle: null,
-        symptoms: []
+        problems: []
       }
 		}
 	},
@@ -74,8 +74,8 @@ export default {
 			this.$swal.fire("Error", error.data.message, 'error');
 		});
 
-		DataService.findAll(COMMON_SYMPTOMS_URL, result => {
-			this.commonSymptoms = result.data;
+		DataService.findAll(COMMON_PROBLEMS_URL, result => {
+			this.commonProblems = result.data;
 		}, error => {
 			this.$swal.fire("Error", error.data.message, 'error');
 		});
@@ -95,7 +95,7 @@ export default {
     },
     resetDiagnosticsForm() {
       this.diagnosticsRequest.vehicle = null;
-      this.diagnosticsRequest.symptoms = [];
+      this.diagnosticsRequest.problems = [];
 		},
 		selectVehicleLabel(vehicle) {
       return `${vehicle.manufacturer.name} ${vehicle.model} ${vehicle.year} (${vehicle.licensePlate})`;

@@ -1,5 +1,6 @@
 package com.drivelab.core.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,6 +29,12 @@ public class Repair {
     @ManyToOne
     @JoinColumn
     private Fault fault;
+
+    @Column
+    private Boolean isEngineOilLevelLow;
+
+    @Column
+    private Boolean hasAftermarketPartsFitted;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(referencedColumnName = "id"),

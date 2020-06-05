@@ -20,6 +20,6 @@ public class FaultResponse {
     private String name;
     private String description;
     private FaultGroup faultGroup;
-    private Set<SymptomAndFaultResponse> symptoms;
+    private Set<ProblemAndFaultResponse> problems;
 
 }

@@ -35,14 +35,14 @@ public class Fault {
     private FaultGroup faultGroup;
 
     @OneToMany(mappedBy = "fault", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<SymptomAndFault> symptoms;
+    private Set<ProblemAndFault> problems;
 
     public Fault(Fault fault) {
         this.id = fault.getId();
         this.name = fault.getName();
         this.description = fault.getDescription();
         this.faultGroup = fault.getFaultGroup();
-        this.symptoms = new HashSet<>();
-        fault.getSymptoms().forEach(symptomAndFault -> this.symptoms.add(new SymptomAndFault(symptomAndFault)));
+        this.problems = new HashSet<>();
+        fault.getProblems().forEach(problemAndFault -> this.problems.add(new ProblemAndFault(problemAndFault)));
     }
 }

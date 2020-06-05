@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SymptomAndFault {
+public class ProblemAndFault {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class SymptomAndFault {
 
     @ManyToOne
     @JoinColumn
-    private Symptom symptom;
+    private Problem problem;
 
     @Column
     private Boolean isCharacteristic;
@@ -29,10 +29,10 @@ public class SymptomAndFault {
     @JoinColumn
     private Fault fault;
 
-    public SymptomAndFault(SymptomAndFault symptomAndFault) {
-        this.id = symptomAndFault.getId();
-        this.symptom = new Symptom(symptomAndFault.getSymptom());
-        this.isCharacteristic = symptomAndFault.getIsCharacteristic();
+    public ProblemAndFault(ProblemAndFault problemAndFault) {
+        this.id = problemAndFault.getId();
+        this.problem = new Problem(problemAndFault.getProblem());
+        this.isCharacteristic = problemAndFault.getIsCharacteristic();
         this.fault = null;
     }
 }

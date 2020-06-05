@@ -1,7 +1,6 @@
 package com.drivelab.core.dto;
 
-import com.drivelab.core.model.Symptom;
-import com.drivelab.core.model.SymptomAndFault;
+import com.drivelab.core.model.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +10,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SymptomAndFaultResponse {
+public class ProblemAndFaultResponse {
 
     private Long id;
     private String name;
     private Boolean isCharacteristic;
 
-    public SymptomAndFaultResponse(Symptom symptom, Boolean isCharacteristic) {
-        this.id = symptom.getId();
-        this.name = symptom.getName();
+    public ProblemAndFaultResponse(Problem problem, Boolean isCharacteristic) {
+        this.id = problem.getId();
+        this.name = problem.getName();
         this.isCharacteristic = isCharacteristic;
     }
 }
