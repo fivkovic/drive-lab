@@ -18,6 +18,7 @@ public class DatabaseInitializer implements ApplicationRunner {
 
     private final VehicleManufacturerRepository vehicleManufacturerRepository;
     private final CarPartRepository carPartRepository;
+    private final RepairShopRepository repairShopRepository;
     @Override
     public void run(ApplicationArguments args) {
 
@@ -567,6 +568,16 @@ public class DatabaseInitializer implements ApplicationRunner {
         this.carPartRepository.save(new CarPart(null, "OBD2 Diagnostics fee", CarPartType.LABOR, CarPartGroup.OTHER, new BigDecimal(20), new BigDecimal(0), 1000000, 0));
         this.carPartRepository.save(new CarPart(null, "General Part replacement fee", CarPartType.LABOR, CarPartGroup.OTHER, new BigDecimal(20), new BigDecimal(0), 1000000, 0));
         this.carPartRepository.save(new CarPart(null, "Working hour", CarPartType.LABOR, CarPartGroup.OTHER, new BigDecimal(7), new BigDecimal(0), 1000000, 0));
+
+        // ============================================================================================================
+        // Repair shop initialization
+        // ============================================================================================================
+        final Set<VehicleManufacturer> allVehicleManufacturers = new HashSet<>(this.vehicleManufacturerRepository.findAll());
+        final Set<CarPart> allCarParts = new HashSet<>(this.carPartRepository.findAll());
+
+        final RepairShop repairShop0 = this.repairShopRepository.save(new RepairShop(null, "admin", this.passwordEncoder.encode("admin"), RepairShopRole.HEADQUARTER, "DriveLab NS Headquarters", "Trg Dositeja Obradovica 6, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
+        final RepairShop repairShop1 = this.repairShopRepository.save(new RepairShop(null, "drivelab1", this.passwordEncoder.encode("123"), RepairShopRole.REPAIR_SHOP, "DriveLab NS #1", "Bulevar Oslobodjenja 1, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
+        final RepairShop repairShop2 = this.repairShopRepository.save(new RepairShop(null,"drivelab2", this.passwordEncoder.encode("123"), RepairShopRole.REPAIR_SHOP, "DriveLab NS #2", "Narodnog Fronta 28, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
 
     }
 
