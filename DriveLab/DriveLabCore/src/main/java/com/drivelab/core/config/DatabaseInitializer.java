@@ -21,6 +21,9 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final RepairShopRepository repairShopRepository;
 
     private final SymptomRepository symptomRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public void run(ApplicationArguments args) {
 
