@@ -19,6 +19,8 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final VehicleManufacturerRepository vehicleManufacturerRepository;
     private final CarPartRepository carPartRepository;
     private final RepairShopRepository repairShopRepository;
+
+    private final SymptomRepository symptomRepository;
     @Override
     public void run(ApplicationArguments args) {
 
@@ -578,6 +580,44 @@ public class DatabaseInitializer implements ApplicationRunner {
         final RepairShop repairShop0 = this.repairShopRepository.save(new RepairShop(null, "admin", this.passwordEncoder.encode("admin"), RepairShopRole.HEADQUARTER, "DriveLab NS Headquarters", "Trg Dositeja Obradovica 6, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
         final RepairShop repairShop1 = this.repairShopRepository.save(new RepairShop(null, "drivelab1", this.passwordEncoder.encode("123"), RepairShopRole.REPAIR_SHOP, "DriveLab NS #1", "Bulevar Oslobodjenja 1, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
         final RepairShop repairShop2 = this.repairShopRepository.save(new RepairShop(null,"drivelab2", this.passwordEncoder.encode("123"), RepairShopRole.REPAIR_SHOP, "DriveLab NS #2", "Narodnog Fronta 28, 21000 Novi Sad, Serbia", allVehicleManufacturers, allCarParts));
+
+        // ============================================================================================================
+        // Symptoms initialization
+        // ============================================================================================================
+        final Symptom symptomA = this.symptomRepository.save(new Symptom(null, "Steering wheel does not return to normal position", "TODO", new HashSet<>()));
+        final Symptom symptomB = this.symptomRepository.save(new Symptom(null, "Front end vibrations", "TODO", new HashSet<>()));
+        final Symptom symptomC = this.symptomRepository.save(new Symptom(null, "Rattling noise", "TODO", new HashSet<>()));
+        final Symptom symptomD = this.symptomRepository.save(new Symptom(null, "Steering wheel hard to turn", "TODO", new HashSet<>()));
+        final Symptom symptomE = this.symptomRepository.save(new Symptom(null, "Clunking sound when driving over bumps", "TODO", new HashSet<>()));
+        final Symptom symptomF = this.symptomRepository.save(new Symptom(null, "Loose springs", "TODO", new HashSet<>()));
+        final Symptom symptomG = this.symptomRepository.save(new Symptom(null, "Outside edge tire wear", "TODO", new HashSet<>()));
+        final Symptom symptomH = this.symptomRepository.save(new Symptom(null, "Loose caliper bolts", "TODO", new HashSet<>()));
+        final Symptom symptomI = this.symptomRepository.save(new Symptom(null, "Inside edge tire wear", "TODO", new HashSet<>()));
+        final Symptom symptomJ = this.symptomRepository.save(new Symptom(null, "Vehicle uncomfortable", "TODO", new HashSet<>()));
+        final Symptom symptomK = this.symptomRepository.save(new Symptom(null, "Power steering fluid level low", "TODO", new HashSet<>()));
+        final Symptom symptomL = this.symptomRepository.save(new Symptom(null, "Abnormal steering when exiting a turn", "TODO", new HashSet<>()));
+        final Symptom symptomM = this.symptomRepository.save(new Symptom(null, "Car pulls to one side", "TODO", new HashSet<>()));
+        final Symptom symptomN = this.symptomRepository.save(new Symptom(null, "Low brake fluid level", "TODO", new HashSet<>()));
+        final Symptom symptomO = this.symptomRepository.save(new Symptom(null, "Brake warning light on", "TODO", new HashSet<>()));
+        final Symptom symptomP = this.symptomRepository.save(new Symptom(null, "Brake discs unevenly worn out", "TODO", new HashSet<>()));
+        final Symptom symptomQ = this.symptomRepository.save(new Symptom(null, "Extended brake pedal travel", "TODO", new HashSet<>()));
+        final Symptom symptomR = this.symptomRepository.save(new Symptom(null, "Engine power loss occurring randomly", "TODO", new HashSet<>()));
+        final Symptom symptomS = this.symptomRepository.save(new Symptom(null, "Brakes make squealing noise when used", "TODO", new HashSet<>()));
+        final Symptom symptomT = this.symptomRepository.save(new Symptom(null, "Vehicle shaking during normal driving", "TODO", new HashSet<>()));
+        final Symptom symptomU = this.symptomRepository.save(new Symptom(null, "Engine backfiring", "TODO", new HashSet<>()));
+        final Symptom symptomV = this.symptomRepository.save(new Symptom(null, "Steering feels loose", "TODO", new HashSet<>()));
+        // final Symptom symptomW = this.symptomRepository.save(new Symptom(null, "", "", new HashSet<>()));
+        final Symptom symptomX = this.symptomRepository.save(new Symptom(null, "One wheel locking up", "TODO", new HashSet<>()));
+        final Symptom symptomY = this.symptomRepository.save(new Symptom(null, "Tires unevenly inflated", "TODO", new HashSet<>()));
+        final Symptom symptomZ = this.symptomRepository.save(new Symptom(null, "No consistency tire wear", "TODO", new HashSet<>()));
+
+        final Symptom symptom1 = this.symptomRepository.save(new Symptom(null, "Repaired broken steering rack or fixed unbalanced tires in last 3 months", "TODO", new HashSet<>()));
+        final Symptom symptom2 = this.symptomRepository.save(new Symptom(null, "Low engine oil level occured more than 3 times in last 6 months", "TODO", new HashSet<>()));
+        final Symptom symptom3 = this.symptomRepository.save(new Symptom(null, "Vehicle has problem with bad cylinder head for more than 6 months", "TODO", new HashSet<>()));
+        final Symptom symptom4 = this.symptomRepository.save(new Symptom(null, "Vehicle has brake system leak", "TODO", new HashSet<>()));
+        final Symptom symptom5 = this.symptomRepository.save(new Symptom(null, "Vehicle has aftermarket parts fitted", "TODO", new HashSet<>()));
+        final Symptom symptom6 = this.symptomRepository.save(new Symptom(null, "Tire-wear related fault occured in the last 3 months", "TODO", new HashSet<>()));
+        final Symptom symptom7 = this.symptomRepository.save(new Symptom(null, "Performed repair in the last 4 months where universal parts were used", "TODO", new HashSet<>()));
 
     }
 
