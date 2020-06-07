@@ -1,0 +1,76 @@
+import java.util.List;
+import com.drivelab.core.model.Problem;
+import com.drivelab.core.model.Fault;
+import com.drivelab.core.model.FaultGroup;
+import com.drivelab.core.model.ProblemAndFault;
+import com.drivelab.core.model.FaultProbability;
+import com.drivelab.core.model.Repair;
+import com.drivelab.core.dto.DiagnosticsRequest;
+import com.drivelab.core.dto.FaultResponse;
+import com.drivelab.core.dto.DiagnosticsResult;
+
+rule "Base Diagnostics Rule"
+    when
+        DiagnosticsRequest($problems: problems)
+        $vehicleProblems: List() from accumulate ($problem: Problem($name: name) from $problems, collectList($name))
+    then
+        System.out.println("Diagnostics session launched at " + java.time.Clock.systemUTC().instant());
+end
+
+rule "Diagnose Faults Of First Group Rule" extends "Base Diagnostics Rule"
+    salience 0
+    when
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.FIRST)
+        $presentProblems: Number(intValue >= 3) from accumulate (
+            ProblemAndFault($vehicleProblems contains problem.name) from $faultProblems, count(1)
+        )
+    then
+        System.out.println("Diagnosed fault " + $fault.getName() + " (" + $presentProblems + "/" + $fault.getProblems().size() + " problems present)");
+        insert(new FaultProbability($fault, new Double($presentProblems.doubleValue() / $fault.getProblems().size())));
+end
+
+rule "Diagnose Faults Of Second Group Rule" extends "Base Diagnostics Rule"
+    salience 0
+    when
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.SECOND)
+        $presentProblems: Number(intValue >= $faultProblems.size) from accumulate (
+            ProblemAndFault($vehicleProblems contains problem.name) from $faultProblems, count(1)
+        )
+    then
+        System.out.println("Diagnosed fault " + $fault.getName() + " (" + $presentProblems + "/" + $fault.getProblems().size() + " problems present)");
+        insert(new FaultProbability($fault, new Double($presentProblems.doubleValue() / $fault.getProblems().size())));
+end
+
+rule "Diagnose Faults Of Third Group Rule" extends "Base Diagnostics Rule"
+    salience 0
+    when
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.THIRD)
+        $presentProblems: Number(intValue >= 2) from accumulate (
+            ProblemAndFault($vehicleProblems contains problem.name, isCharacteristic == false) from $faultProblems, count(1)
+        )
+        $presentCharacteristicProblems: Number(intValue >= 1) from accumulate (
+            ProblemAndFault($vehicleProblems contains problem.name, isCharacteristic == true) from $faultProblems, count(1)
+        )
+    then
+        System.out.println("Diagnosed fault " + $fault.getName() + " (" + $presentProblems + "/" + $fault.getProblems().size() + " problems present)");
+        insert(new FaultProbability($fault, new Double($presentProblems.doubleValue() + $presentCharacteristicProblems.doubleValue() / $fault.getProblems().size())));
+end
+
+rule "Select Fault With Highest Probability Based On Problems Count Rule"
+    salience -1
+    when
+        $selectedFault: FaultProbability() from accumulate (
+            $fault: FaultProbability($probability: probability, $problemsCount: fault.problems.size),
+            init(double highestProbability = 0.0; FaultProbability highestProbabilityFault = null;),
+            action(
+                if (highestProbabilityFault == null || $probability > highestProbability || (highestProbability == $probability && $problemsCount > highestProbabilityFault.getFault().getProblems().size())) {
+                     highestProbability = $probability;
+                     highestProbabilityFault = $fault;
+                 }
+             ),
+            result(highestProbabilityFault)
+        )
+    then
+        System.out.println("Selected fault is " + $selectedFault.getFault().getName() + " (" + $selectedFault.getProbability() * 100 + "%)\n");
+        insert(new DiagnosticsResult(new FaultResponse($selectedFault.getFault()), new Double($selectedFault.getProbability())));
+end

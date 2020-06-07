@@ -6,6 +6,7 @@
     <groupId>com.drivelab</groupId>
     <artifactId>drive-lab-rules</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>DriveLabRules</name>
     <description>DriveLab Rules Library</description>
     <packaging>jar</packaging>
@@ -22,5 +23,18 @@
             <version>6.5.0.Final</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

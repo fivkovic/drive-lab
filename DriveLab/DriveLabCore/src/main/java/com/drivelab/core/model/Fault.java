@@ -45,4 +45,16 @@ public class Fault {
         this.problems = new HashSet<>();
         fault.getProblems().forEach(problemAndFault -> this.problems.add(new ProblemAndFault(problemAndFault)));
     }
+
+    @SuppressWarnings("unused")
+    public Fault(@NotEmpty String name, FaultGroup faultGroup) {
+        this.name = name;
+        this.faultGroup = faultGroup;
+    }
+
+    @SuppressWarnings("unused")
+    public Fault(@NotEmpty String name, Set<ProblemAndFault> problems) {
+        this.name = name;
+        this.problems = problems;
+    }
 }
