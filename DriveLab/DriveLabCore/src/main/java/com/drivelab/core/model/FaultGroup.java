@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum FaultGroup {
-    FIRST(1, "First group"),
-    SECOND(2, "Second group"),
-    THIRD(3, "Third group");
+    SUSPENSION_AND_STEERING_SYSTEM(1, "Suspension and steering system"),
+    ENGINE(2, "Engine"),
+    OTHER(3, "Other");
 
     private final int code;
     private final String name;

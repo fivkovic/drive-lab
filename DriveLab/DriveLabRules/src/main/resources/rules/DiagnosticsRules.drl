@@ -17,10 +17,10 @@ rule "Base Diagnostics Rule"
         System.out.println("Diagnostics session launched at " + java.time.Clock.systemUTC().instant());
 end
 
-rule "Diagnose Faults Of First Group Rule" extends "Base Diagnostics Rule"
+rule "Diagnose Suspension And Steering System Faults Rule" extends "Base Diagnostics Rule"
     salience 0
     when
-        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.FIRST)
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.SUSPENSION_AND_STEERING_SYSTEM)
         $presentProblems: Number(intValue >= 3) from accumulate (
             ProblemAndFault($vehicleProblems contains problem.name) from $faultProblems, count(1)
         )
@@ -29,10 +29,10 @@ rule "Diagnose Faults Of First Group Rule" extends "Base Diagnostics Rule"
         insert(new FaultProbability($fault, new Double($presentProblems.doubleValue() / $fault.getProblems().size())));
 end
 
-rule "Diagnose Faults Of Second Group Rule" extends "Base Diagnostics Rule"
+rule "Diagnose Engine Faults Rule" extends "Base Diagnostics Rule"
     salience 0
     when
-        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.SECOND)
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.ENGINE)
         $presentProblems: Number(intValue >= $faultProblems.size) from accumulate (
             ProblemAndFault($vehicleProblems contains problem.name) from $faultProblems, count(1)
         )
@@ -41,10 +41,10 @@ rule "Diagnose Faults Of Second Group Rule" extends "Base Diagnostics Rule"
         insert(new FaultProbability($fault, new Double($presentProblems.doubleValue() / $fault.getProblems().size())));
 end
 
-rule "Diagnose Faults Of Third Group Rule" extends "Base Diagnostics Rule"
+rule "Diagnose Other Faults Rule" extends "Base Diagnostics Rule"
     salience 0
     when
-        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.THIRD)
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.OTHER)
         $presentProblems: Number(intValue >= 2) from accumulate (
             ProblemAndFault($vehicleProblems contains problem.name, isCharacteristic == false) from $faultProblems, count(1)
         )
