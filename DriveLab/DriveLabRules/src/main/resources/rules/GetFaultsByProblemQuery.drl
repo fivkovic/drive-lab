@@ -1,0 +1,12 @@
+import java.util.List;
+import com.drivelab.core.model.Problem;
+import com.drivelab.core.model.Fault;
+import com.drivelab.core.model.ProblemAndFault;
+
+query "Get Faults By Problem Query"
+    $problems: List() from collect (Problem())
+    $namesOfProblems: List() from accumulate (Problem($name: name) from $problems, collectList($name))
+    $fault: Fault($faultProblems: problems)
+
+    $count: Number(intValue > 0) from accumulate (ProblemAndFault(problem.name memberOf $namesOfProblems) from $faultProblems, count(1))
+end
