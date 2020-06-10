@@ -9,6 +9,8 @@
           <b-navbar-nav>
             <!-- TODO: Add routes for CRUD -->
             <b-nav-item v-if="isClassicRepairShop()" to="/diagnostics">Diagnostics</b-nav-item>
+            <b-nav-item v-if="isClassicRepairShop()" to="/search-faults">Search Faults</b-nav-item>
+            <b-nav-item v-if="isClassicRepairShop()" to="/search-problems">Search Problems</b-nav-item>
           </b-navbar-nav>
 
 

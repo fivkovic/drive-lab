@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import LogIn from '../views/LogIn.vue'
 import Diagnostics from '../views/Diagnostics.vue'
+import SearchFaults from '../views/SearchFaults.vue'
+import SearchProblems from '../views/SearchProblems.vue'
 
 Vue.use(VueRouter)
 
@@ -36,7 +38,22 @@ const routes = [
       next(getRepairShopRole() == 'REPAIR_SHOP');
     }
   },
-
+  {
+    path: '/search-faults',
+    name: 'Search Faults',
+    component: SearchFaults,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'REPAIR_SHOP');
+    }
+  },
+  {
+    path: '/search-problems',
+    name: 'Search Problems',
+    component: SearchProblems,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'REPAIR_SHOP');
+    }
+  },
 
 ]
 
