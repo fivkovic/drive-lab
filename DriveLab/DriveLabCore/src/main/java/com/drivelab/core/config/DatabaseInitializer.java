@@ -823,7 +823,19 @@ public class DatabaseInitializer implements ApplicationRunner {
         vehicle1Repair.setTotalPrice(totalPrice);
         vehicle1RepairHistory.add(vehicle1Repair);
 
+        Repair vehicle1Repair2 = new Repair(
+                null,
+                vehicle1,
+                brokenSteeringRack,
+                new Boolean(false),
+                new Boolean(false),
+                new HashSet<>(),
+                new BigDecimal(0),
+                repairShop1,
+                DateUtils.getDateInPast(234)
+        );
 
+        vehicle1RepairHistory.add(vehicle1Repair2);
 
 
         // TODO 2: Low engine oil level occured more than 3 times in last 6 months

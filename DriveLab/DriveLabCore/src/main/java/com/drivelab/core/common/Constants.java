@@ -17,9 +17,15 @@ public class Constants {
         public static final String CAR_PARTS_ENDPOINT = "/api/car-parts";
         public static final String FAULTS_ENDPOINT = "/api/faults";
         public static final String REPAIRS_ENDPOINT = "/api/repairs";
+        public static final String REPORTS_ENDPOINT = "/api/reports";
 
         public static final String BY_PROBLEM = "/by-problem";
         public static final String BY_FAULT = "/by-fault";
+
+        public static final String FINANCIAL = "/financial";
+        public static final String CUSTOMER = "/customer";
+        public static final String VEHICLE = "/vehicle";
+
     }
 
     public static class Drools {

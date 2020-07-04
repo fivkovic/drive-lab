@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -52,4 +53,19 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Repair> repairs;
+
+    public Vehicle(Vehicle vehicle) {
+        this.id = vehicle.getId();
+        this.owner = vehicle.getOwner();
+        this.manufacturer = vehicle.getManufacturer();
+        this.model = vehicle.getModel();
+        this.year = vehicle.getYear();
+        this.mileage = vehicle.getMileage();
+        this.engineType = vehicle.getEngineType();
+        this.licensePlate = vehicle.getLicensePlate();
+        this.trafficLicenseNumber = vehicle.getTrafficLicenseNumber();
+
+        this.repairs = new HashSet<>();
+        vehicle.getRepairs().forEach(repair -> this.repairs.add(new Repair(repair)));
+    }
 }

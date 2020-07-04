@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -53,4 +54,24 @@ public class Repair {
     @Column
     @NotNull
     private Date performedOn;
+
+    public Repair(Repair repair) {
+        this.id = repair.getId();
+
+        this.vehicle = repair.getVehicle(); // TODO
+        this.vehicle.setRepairs(new HashSet<>());
+
+        this.fault = repair.getFault();
+        this.wasEngineOilLevelLow = repair.getWasEngineOilLevelLow();
+        this.hasAftermarketPartsFitted = repair.getHasAftermarketPartsFitted();
+
+        this.usedParts = new HashSet<>();
+        repair.getUsedParts().forEach(usedCarPart -> {
+            this.usedParts.add(new UsedCarPart(usedCarPart.getCarPart(), usedCarPart.getCount()));
+        });
+
+        this.totalPrice = repair.getTotalPrice();
+        this.performedAt = repair.getPerformedAt();        // TODO: recheck
+        this.performedOn = repair.getPerformedOn();
+    }
 }

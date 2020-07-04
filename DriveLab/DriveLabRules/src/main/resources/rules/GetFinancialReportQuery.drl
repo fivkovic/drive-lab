@@ -1,0 +1,86 @@
+import com.drivelab.core.model.Repair;
+import com.drivelab.core.model.Vehicle;
+import com.drivelab.core.model.Fault;
+import com.drivelab.core.model.UsedCarPart;
+import com.drivelab.core.dto.FinancialReportResponse;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
+
+query "Get Financial Report Query" (LocalDate periodStart, LocalDate periodEnd)
+    $repairs: List(size > 0) from collect (
+        Repair($performedOn: performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+            $performedOn.isAfter(periodStart),
+            $performedOn.isBefore(periodEnd)
+        )
+    )
+    $allUsedParts: List(size > 0) from accumulate (
+        Repair($usedParts: usedParts) from $repairs,
+        init(List<UsedCarPart> allParts = new ArrayList<UsedCarPart>();),
+        action(allParts.addAll($usedParts);),
+        result(allParts)
+    )
+
+    $financialReport: Number() from accumulate (
+        UsedCarPart($carPart: carPart, $quantity: count) from $allUsedParts,
+        init(double revenue = 0; double expenses = 0;),
+        action(revenue += $quantity * $carPart.getSalesPrice().doubleValue(); expenses += $quantity * $carPart.getPurchasePrice().doubleValue();),
+        result(new FinancialReportResponse(revenue, expenses, revenue - expenses))
+    )
+end
+
+//query "Get Financial Report Query"
+//    $repair: Repair($usedParts: usedParts)
+//    $revenue: Number() from accumulate (
+//        UsedCarPart($ucp: this, $carPart: carPart, $quantity: count) from $usedParts,
+//        //$allUsedParts: collectList($ucp),
+//        init(double revenue = 0;),
+//        action(revenue += $quantity * $carPart.getSalesPrice().doubleValue(); System.out.println($carPart.getSalesPrice().doubleValue());),
+//        result(new BigDecimal(revenue))
+//    )
+//end
+
+
+query "Get Vehicle Report Query"
+    /* STEP 1: Get all repairs performed on the vehicle */
+    $vehicle: Vehicle($repairs: repairs)
+    $faults: Set(size >= 3) from accumulate (
+        Repair($fault: fault,
+               performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(12))
+           ) from $repairs, collectSet($fault)
+    )
+
+    /* STEP 2: Check how many repairs are present for each fault */
+    $fault: Fault() from $faults
+    Number(intValue >= 2) from accumulate(
+        Repair(fault != null,
+            fault.name == $fault.name
+            //
+        ) from $repairs,
+        count(1)
+    )
+end
+
+
+//query "Get Vehicle Report Query"
+//    /* STEP 1: Get all repairs performed on the vehicle */
+//    $vehicle: Vehicle($repairs: repairs)
+//    $faults: Set() from accumulate (
+//        Repair($fault: fault) from $repairs, collectSet($fault)
+//    )
+//
+//    /* STEP 2: Check how many repairs are present for each fault */
+//    $fault: Fault() from $faults
+//    Number(intValue > 1) from accumulate(
+//        Repair(fault != null,
+//            fault.name == $fault.name
+//            // performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(6))
+//        ) from $repairs,
+//        count(1)
+//    )
+//end
