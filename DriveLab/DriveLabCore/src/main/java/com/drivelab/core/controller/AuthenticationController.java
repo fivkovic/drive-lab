@@ -31,7 +31,7 @@ public class AuthenticationController {
     private final DiagnosticsService diagnosticsService;
 
     @PostMapping
-    public ResponseEntity authenticate(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
+    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
         final RepairShop repairShop = this.repairShopService.findByUsernameAndPassword(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final KieSession kieSession = kieBase.newKieSession();
         final Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>() {{
@@ -47,7 +47,7 @@ public class AuthenticationController {
     }
 
     @PutMapping
-    public ResponseEntity logOut() {
+    public ResponseEntity<?> logOut() {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok().build();
     }

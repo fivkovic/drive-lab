@@ -13,42 +13,42 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionResolver {
 
     @ExceptionHandler(AuthorizationException.class)
-    public ResponseEntity handleAuthorizationException(AuthorizationException exception) {
+    public ResponseEntity<?> handleAuthorizationException(AuthorizationException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity handleBadRequestException(BadRequestException exception) {
+    public ResponseEntity<?> handleBadRequestException(BadRequestException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity handleMethodArgumentNotValidException() {
+    public ResponseEntity<?> handleMethodArgumentNotValidException() {
         return new ResponseEntity<>(new ErrorResponse("Method argument validation failed."), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity handleDataIntegrityViolationException() {
+    public ResponseEntity<?> handleDataIntegrityViolationException() {
         return new ResponseEntity<>(new ErrorResponse("Unable to delete entity."), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity handleForbiddenException(ForbiddenException exception) {
+    public ResponseEntity<?> handleForbiddenException(ForbiddenException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(ClassCastException.class)
-    public ResponseEntity handleClassCastException(ClassCastException exception) {
+    public ResponseEntity<?> handleClassCastException(ClassCastException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity handleNotFoundException(NotFoundException exception) {
+    public ResponseEntity<?> handleNotFoundException(NotFoundException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity handleUsernameNotFoundException(UsernameNotFoundException exception) {
+    public ResponseEntity<?> handleUsernameNotFoundException(UsernameNotFoundException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 }

@@ -59,7 +59,7 @@ export default {
 
         const authenticatedUser = result.data;
         localStorage.setItem("authenticated-user", JSON.stringify(authenticatedUser));
-        this.$store.commit("setRepairShopRole", authenticatedUser.role);
+        this.$store.commit("setRepairShopRole", authenticatedUser.repairShopRole);
 
         Toast.fire({
           icon: 'success',

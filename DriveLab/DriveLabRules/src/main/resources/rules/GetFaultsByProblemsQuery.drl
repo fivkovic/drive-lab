@@ -3,7 +3,7 @@ import com.drivelab.core.model.Problem;
 import com.drivelab.core.model.Fault;
 import com.drivelab.core.model.ProblemAndFault;
 
-query "Get Faults By Problem Query"
+query "Get Faults By Problems Query"
     $problems: List() from collect (Problem())
     $namesOfProblems: List() from accumulate (Problem($name: name) from $problems, collectList($name))
     $fault: Fault($faultProblems: problems)

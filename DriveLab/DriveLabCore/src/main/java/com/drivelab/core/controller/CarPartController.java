@@ -29,12 +29,12 @@ public class CarPartController extends BaseController<CarPart, Long> {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    public ResponseEntity<CarPartResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(new CarPartResponse(this.service.findById(id)));
     }
 
     @GetMapping("/type/{carPartType}")
-    public ResponseEntity<?> findAllByGroup(@PathVariable CarPartType carPartType)  {
+    public ResponseEntity<?> findAllByType(@PathVariable CarPartType carPartType)  {
         return ResponseEntity.ok(((CarPartService)this.service).findAllByType(carPartType));
     }
 

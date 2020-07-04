@@ -3,7 +3,7 @@ package com.drivelab.core.util;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtils {
+public final class DateUtils {
 
     private DateUtils() { }
 

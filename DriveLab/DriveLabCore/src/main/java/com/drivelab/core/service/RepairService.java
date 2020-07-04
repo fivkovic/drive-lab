@@ -1,13 +1,13 @@
 package com.drivelab.core.service;
 
-import com.drivelab.core.model.Problem;
+import com.drivelab.core.model.Repair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProblemService extends BaseService<Problem, Long> {
+public class RepairService extends BaseService<Repair, Long> {
 
     @Autowired
-    protected ProblemService(JpaRepository<Problem, Long> problemRepository) { super(problemRepository); }
+    protected RepairService(JpaRepository<Repair, Long> repairRepository) { super(repairRepository); }
 }

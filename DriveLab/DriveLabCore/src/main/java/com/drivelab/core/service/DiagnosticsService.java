@@ -22,18 +22,19 @@ public class DiagnosticsService {
     private final FaultRepository faultRepository;
     private final VehicleRepository vehicleRepository;
 
-    // TODO: Move this to separate services
-
+    // TODO: Move this to separate service
     public void initializeKieSession() {
         final KieSession kieSession = this.getKieSession();
         this.faultRepository.findAll().forEach(fault -> kieSession.insert(new Fault(fault)));
     }
 
+    // TODO: Move this to separate service
     public void disposeKieSession(KieSession kieSession) {
         kieSession.getFactHandles(factHandle -> !(factHandle instanceof Fault))
                 .forEach(kieSession::delete);
     }
 
+    // TODO: Move this to static class
     private KieSession getKieSession() {
         return (KieSession) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }

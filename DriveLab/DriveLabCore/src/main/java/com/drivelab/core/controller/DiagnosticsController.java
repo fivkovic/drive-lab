@@ -24,8 +24,7 @@ public class DiagnosticsController {
     private final DiagnosticsService diagnosticsService;
 
     @PostMapping
-    public ResponseEntity handlePostDiagnosisRequest(@RequestBody @Valid DiagnosticsRequest diagnosticsRequest) {
-
+    public ResponseEntity<DiagnosticsResult> handlePostDiagnosisRequest(@RequestBody @Valid DiagnosticsRequest diagnosticsRequest) {
         DiagnosticsResult diagnosticsResult = this.diagnosticsService.performDiagnostics(diagnosticsRequest);
 
         return ResponseEntity.ok(diagnosticsResult);
