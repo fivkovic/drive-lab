@@ -10,7 +10,7 @@
               :background-color="'#FFFFFF'">
     </loading>
     <h1><b>Search Customers</b></h1>
-    <br/>
+    <br>
     <b-row>
       <b-col>
         <b-form-group horizontal>

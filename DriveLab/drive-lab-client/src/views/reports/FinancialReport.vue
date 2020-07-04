@@ -72,7 +72,11 @@ export default {
         to: null,
       },
       
-      financialReport: null,
+      financialReport: {
+        revenue: 0,
+        expenses: 0,
+        profit: 0
+      },
 
       today: today,
       tomorrow: tomorrow,

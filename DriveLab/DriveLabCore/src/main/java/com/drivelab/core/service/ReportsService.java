@@ -1,8 +1,11 @@
 package com.drivelab.core.service;
 
-import com.drivelab.core.dto.*;
-import com.drivelab.core.exception.NotFoundException;
-import com.drivelab.core.model.*;
+import com.drivelab.core.dto.CustomerResponse;
+import com.drivelab.core.dto.FinancialReportResponse;
+import com.drivelab.core.dto.VehicleResponse;
+import com.drivelab.core.model.Customer;
+import com.drivelab.core.model.Repair;
+import com.drivelab.core.model.Vehicle;
 import com.drivelab.core.repository.CustomerRepository;
 import com.drivelab.core.repository.RepairRepository;
 import com.drivelab.core.repository.VehicleRepository;
@@ -13,12 +16,8 @@ import org.kie.api.runtime.rule.QueryResultsRow;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,16 +41,16 @@ public class ReportsService {
         this.repairRepository.findAll().forEach(repair -> kieSession.insert(new Repair(repair)));
 
         // STEP 2: Execute query
-        final QueryResults results = kieSession.getQueryResults("Get Financial Report Query", from, to);
+        final QueryResults queryResults = kieSession.getQueryResults("Get Financial Report Query", from, to);
 
-        if (!results.iterator().hasNext()) {
+        if (!queryResults.iterator().hasNext()) {
             kieSession.getFactHandles(factHandle -> (factHandle instanceof Repair))
                     .forEach(kieSession::delete);
-            return new FinancialReportResponse();
+            return new FinancialReportResponse(0.0, 0.0 ,0.0);
         }
 
         // STEP 3: Get query results
-        final QueryResultsRow row = results.iterator().next();
+        final QueryResultsRow row = queryResults.iterator().next();
         FinancialReportResponse financialReportResponse = (FinancialReportResponse) row.get("$financialReport");
 
         // STEP 4: Dispose kie Session
@@ -65,12 +64,22 @@ public class ReportsService {
 
         // STEP 1: Get kieSession for user
         final KieSession kieSession = this.getKieSession();
-        // TODO: this.repairRepository.findAll().forEach(repair -> kieSession.insert(new Repair(repair)));
+        this.vehicleRepository.findAll().forEach(vehicle -> kieSession.insert(new Vehicle(vehicle)));
 
         // STEP 2: Execute query
-        final QueryResults results = kieSession.getQueryResults("Get Customer Report Query");
+        final QueryResults queryResults = kieSession.getQueryResults("Get Customer Report Query");
 
-        return null;
+        // STEP 3: Get query results
+        final List<Customer> customers = new ArrayList<>();
+        queryResults.forEach(queryResultsRow -> customers.add((Customer) queryResultsRow.get("$customer")));
+
+        final List<CustomerResponse> results = customers.stream().map(CustomerResponse::new).collect(Collectors.toList());
+
+        // STEP 4: Dispose kie Session
+        kieSession.getFactHandles(factHandle -> (factHandle instanceof Vehicle))
+                .forEach(kieSession::delete);
+
+        return results;
     }
 
     public List<VehicleResponse> getVehicleReport() {

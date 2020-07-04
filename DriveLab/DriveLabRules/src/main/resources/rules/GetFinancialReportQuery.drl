@@ -84,3 +84,17 @@ end
 //        count(1)
 //    )
 //end
+
+query "Get Customer Report Query"
+    $vehicle: Vehicle($vehicleRepairs: repairs, $customer: owner)
+    // TODO: Change to 4 after testing
+    $repairs: Set(size >= 2) from accumulate (
+        Repair($r: this, performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(24))) from $vehicleRepairs,
+        collectSet($r)
+    )
+    // TODO: Change to 2000 after testing
+    $totalCost: Number(doubleValue >= 1470) from accumulate (
+        Repair($totalPrice: totalPrice) from $repairs,
+        sum($totalPrice)
+    )
+end
