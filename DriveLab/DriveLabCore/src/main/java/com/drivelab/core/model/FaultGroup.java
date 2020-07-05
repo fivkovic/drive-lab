@@ -4,9 +4,26 @@ import lombok.Getter;
 
 @Getter
 public enum FaultGroup {
-    SUSPENSION_AND_STEERING_SYSTEM(1, "Suspension and steering system"),
-    ENGINE(2, "Engine"),
-    OTHER(3, "Other");
+    CAR_BODY(0, "Car body components"),
+    DOORS(1, "Doors"),
+    WINDOWS(2, "Windows and glass"),
+    ELECTRONICS(3, "Electronic components"),
+    GAUGES(4, "Gauges and meters"),
+    IGNITION_SYSTEM(5, "Ignition system"),
+    LIGHTING_SYSTEM(6, "Lighting and signaling system"),
+    SENSORS(7, "Sensors"),
+    INTERIOR(8, "Interior components"),
+    BRAKING_SYSTEM(9, "Braking system"),
+    POWERTRAIN_COMPONENTS(10, "Powertrain components"),
+    ENGINE(11, "Engine components and parts"),
+    ENGINE_COOLING_SYSTEM(12, "Engine cooling system"),
+    ENGINE_OIL_SYSTEM(13, "Engine oil system"),
+    EXHAUST_SYSTEM(14, "Exhaust system"),
+    FUEL_SUPPLY_SYSTEM(15, "Fuel supply system"),
+    SUSPENSION_AND_STEERING_SYSTEM(16, "Suspension and steering system"),
+    TRANSMISSION_SYSTEM(17, "Transmission system"),
+    AIR_CONDITIONING(18, "Air conditioning system (AC)"),
+    OTHER(19, "Other");
 
     private final int code;
     private final String name;

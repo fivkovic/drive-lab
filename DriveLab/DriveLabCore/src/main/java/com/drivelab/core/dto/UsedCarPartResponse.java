@@ -1,6 +1,5 @@
 package com.drivelab.core.dto;
 
-import com.drivelab.core.model.CarPart;
 import com.drivelab.core.model.CarPartGroup;
 import com.drivelab.core.model.CarPartType;
 import com.drivelab.core.model.UsedCarPart;

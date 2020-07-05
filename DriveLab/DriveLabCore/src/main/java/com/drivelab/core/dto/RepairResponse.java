@@ -1,13 +1,11 @@
 package com.drivelab.core.dto;
 
-import com.drivelab.core.model.*;
+import com.drivelab.core.model.Repair;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;

@@ -2,14 +2,11 @@ package com.drivelab.core.dto;
 
 import com.drivelab.core.model.Customer;
 import com.drivelab.core.model.Vehicle;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @NoArgsConstructor

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-
 import java.util.UUID;
 
 import static com.drivelab.core.common.Constants.API.DIAGNOSTICS_ENDPOINT;

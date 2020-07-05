@@ -2,8 +2,10 @@ package com.drivelab.core.dto;
 
 import com.drivelab.core.model.Problem;
 import com.drivelab.core.model.Vehicle;
-import lombok.*;
-import org.kie.api.definition.type.PropertyReactive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

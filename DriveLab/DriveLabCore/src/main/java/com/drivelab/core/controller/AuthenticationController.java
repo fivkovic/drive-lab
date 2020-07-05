@@ -4,6 +4,8 @@ import com.drivelab.core.dto.AuthenticationRequest;
 import com.drivelab.core.model.RepairShop;
 import com.drivelab.core.service.DiagnosticsService;
 import com.drivelab.core.service.RepairShopService;
+import lombok.RequiredArgsConstructor;
+import org.kie.api.KieBase;
 import org.kie.api.runtime.KieSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -12,10 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.kie.api.KieBase;
-import lombok.RequiredArgsConstructor;
-import javax.validation.Valid;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 

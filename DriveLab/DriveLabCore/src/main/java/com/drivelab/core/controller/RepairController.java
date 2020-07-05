@@ -1,7 +1,6 @@
 package com.drivelab.core.controller;
 
 import com.drivelab.core.dto.RepairResponse;
-import com.drivelab.core.dto.VehicleResponse;
 import com.drivelab.core.model.Repair;
 import com.drivelab.core.service.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
