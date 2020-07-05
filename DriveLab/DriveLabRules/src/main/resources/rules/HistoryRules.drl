@@ -1,0 +1,129 @@
+import java.util.List;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import com.drivelab.core.model.Problem;
+import com.drivelab.core.model.Fault;
+import com.drivelab.core.model.FaultGroup;
+import com.drivelab.core.model.ProblemAndFault;
+import com.drivelab.core.model.FaultProbability;
+import com.drivelab.core.model.Repair;
+import com.drivelab.core.model.CarPart;
+import com.drivelab.core.model.FactUpdate;
+import com.drivelab.core.dto.DiagnosticsRequest;
+import com.drivelab.core.dto.FaultResponse;
+import com.drivelab.core.dto.DiagnosticsResult;
+
+rule "A Repair Job Related To 'Broken steering rack' Fault Or 'Unbalanced tires' Fault In The Last 3 Months Exists In The History"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        Repair(fault != null && (fault.name == "Broken steering rack" || fault.name == "Unbalanced tires")) over window:time(90d)
+    then
+        System.out.println(drools.getRule().getName() + " for vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Repaired broken steering rack or fixed unbalanced tires in last 3 months"));
+        }
+end
+
+rule "History Shows that Low engine oil level occured more than 3 times in last 6 months"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        // TODO: Check if current diag. request has low engine oil problem
+        //  if it has one, then history should return at least 2 more to fire this rule
+        Number(intValue > 3) from accumulate (
+            Repair(wasEngineOilLevelLow == true) over window:time(180d),
+            count(1)
+        )
+    then
+        System.out.println(drools.getRule().getName() + " for vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Low engine oil level occured more than 3 times in last 6 months"));
+        }
+end
+
+rule "History Shows that a 'Bad cylinder head' Fault is present for more than 6 months"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        Repair(fault != null, fault.name == "Bad cylinder head", $repairDate: performedOn, $repairDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(6)))
+    then
+        System.out.println(drools.getRule().getName() + " on vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Vehicle has problem with bad cylinder head for more than 6 months"));
+        }
+end
+
+rule "History Shows that a 'Brake system leak' Fault occured previously"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        Repair(fault != null, fault.name == "Brake system leak")
+    then
+        System.out.println(drools.getRule().getName() + " on vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Vehicle has brake system leak"));
+        }
+end
+
+rule "History shows that aftermarket parts were fitted previously"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        Repair(hasAftermarketPartsFitted == true)
+    then
+        System.out.println(drools.getRule().getName() + " on vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Vehicle has aftermarket parts fitted"));
+        }
+end
+
+rule "Repaired fault that has problem 'Outside edge tire wear' or problem 'Inside edge tire wear' in last 3 months"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        Repair(fault != null, fault.problems != null, $repairedFaultProblems: fault.problems) over window:time(90d)
+        Number(intValue > 0) from accumulate (
+            ProblemAndFault(problem.name == "" || problem.name == "") from $repairedFaultProblems, count(1)
+        )
+    then
+        System.out.println(drools.getRule().getName() + " on vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Tire-wear related fault occured in the last 3 months"));
+        }
+end
+
+rule "History shows that universal parts were used in a previous repair in past 4 months"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest()
+        Repair(usedParts != null, $fittedParts: usedParts) over window:time(120d)
+        Number(intValue > 0) from accumulate (
+            CarPart(carPartType == "UNIVERSAL") from $fittedParts, count(1)
+        )
+    then
+        System.out.println(drools.getRule().getName() + " on vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Performed repair in the last 4 months where universal parts were used"));
+        }
+end
+
+rule "Detected low engine oil level"
+    salience 5
+    lock-on-active
+    when
+        $diagnosticsRequest: DiagnosticsRequest(engineOilLevelPercentage < 0.35)
+    then
+        System.out.println(drools.getRule().getName() + " on vehicle with license plate " + $diagnosticsRequest.getVehicle().getLicensePlate());
+        modify($diagnosticsRequest) {
+            getProblems().add(new Problem("Low engine oil level"));
+        }
+end
