@@ -1,5 +1,0 @@
-import com.drivelab.core.model.Fault;
-
-query "Get Problems By Fault Query" (String faultName)
-    Fault($problems: problems, name == faultName)
-end

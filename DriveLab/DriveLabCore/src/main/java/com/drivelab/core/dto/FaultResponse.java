@@ -1,7 +1,6 @@
 package com.drivelab.core.dto;
 
 import com.drivelab.core.model.Fault;
-import com.drivelab.core.model.FaultGroup;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ public class FaultResponse {
     private Long id;
     private String name;
     private String description;
-    private FaultGroup faultGroup;
+    private String faultGroup;
     private Set<ProblemAndFaultResponse> problems;
 
     @SuppressWarnings("unused")
@@ -27,7 +26,7 @@ public class FaultResponse {
         this.id = fault.getId();
         this.name = fault.getName();
         this.description = fault.getDescription();
-        this.faultGroup = fault.getFaultGroup();
+        this.faultGroup = fault.getFaultGroup().getName();
         this.problems = fault.getProblems().stream().map(problemAndFault ->
                 new ProblemAndFaultResponse(problemAndFault.getProblem(), problemAndFault.getIsCharacteristic())
             ).collect(Collectors.toSet());

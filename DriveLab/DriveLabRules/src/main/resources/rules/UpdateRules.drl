@@ -1,0 +1,15 @@
+package rules;
+
+import com.drivelab.core.model.FactUpdate;
+import com.drivelab.core.dto.DiagnosticsRequest;
+
+rule "Update Diagnostic Request With New Facts Rule"
+	agenda-group "update"
+	when
+		$factUpdate: FactUpdate($requestId: requestId, $problem: problem, processed == false)
+		$diagnosticsRequest : DiagnosticsRequest(id == $requestId) // @Watch(!*)
+	then
+	    System.out.println(drools.getRule().getName() + " for request " + $requestId);
+	    modify($factUpdate) { setProcessed(true); }
+		modify($diagnosticsRequest) { updateProblemsWith($problem); }
+end

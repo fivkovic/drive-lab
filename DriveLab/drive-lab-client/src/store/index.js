@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     role: '',
-
-    // TODO: Add websocket handling here later
-
+    socket: {
+      socketClient: null,
+      stompClient: null
+    }
   },
   getters: {
     isAuthenticated: (state) => {
@@ -25,9 +29,28 @@ export default new Vuex.Store({
     setRepairShopRole: (state, value) => {
       state.role = value;
     },
-
-    // TODO: Add websocket handling here later
-    
+    connectWebSocket: (state, callback) => {
+      state.socket.socketClient = new SockJS("http://localhost:8080/api/notifications");
+      state.socket.stompClient = Stomp.over(state.socket.socketClient);
+      state.socket.stompClient.connect(
+          {},
+          () => {
+              state.socket.stompClient.subscribe("/notifications", response => {
+                callback(response.body);
+              });
+          },
+          response => {
+              console.log(response);
+          }
+      );
+    },
+    disconnectWebSocket: (state) => {
+        if (state.socket.stompClient) {
+            state.socket.stompClient.disconnect();
+        }
+        state.socket.socketClient = null;
+        state.socket.stompClient = null;
+    }
   },
   actions: {
   },

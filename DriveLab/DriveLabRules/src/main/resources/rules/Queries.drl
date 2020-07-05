@@ -1,0 +1,75 @@
+package rules;
+
+import com.drivelab.core.model.Problem;
+import com.drivelab.core.model.Fault;
+import com.drivelab.core.model.ProblemAndFault;
+import com.drivelab.core.model.Repair;
+import com.drivelab.core.model.Vehicle;
+import com.drivelab.core.model.UsedCarPart;
+import com.drivelab.core.dto.FinancialReportResponse;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
+
+query "Get Faults By Problems Query"
+    $problems: List() from collect (Problem())
+    $namesOfProblems: List() from accumulate (Problem($name: name) from $problems, collectList($name))
+    $fault: Fault($faultProblems: problems)
+
+    $count: Number(intValue > 0) from accumulate (ProblemAndFault(problem.name memberOf $namesOfProblems) from $faultProblems, count(1))
+end
+
+query "Get Problems By Fault Query" (String faultName)
+    Fault($problems: problems, name == faultName)
+end
+
+query "Get Financial Report Query" (LocalDate periodStart, LocalDate periodEnd)
+    $repairs: List(size > 0) from collect (
+        Repair($performedOn: performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+            $performedOn.isAfter(periodStart),
+            $performedOn.isBefore(periodEnd)
+        )
+    )
+    $allUsedParts: List(size > 0) from accumulate (
+        Repair($usedParts: usedParts) from $repairs,
+        init(List<UsedCarPart> allParts = new ArrayList<UsedCarPart>();),
+        action(allParts.addAll($usedParts);),
+        result(allParts)
+    )
+
+    $financialReport: Number() from accumulate (
+        UsedCarPart($carPart: carPart, $quantity: count) from $allUsedParts,
+        init(double revenue = 0; double expenses = 0;),
+        action(revenue += $quantity * $carPart.getSalesPrice().doubleValue(); expenses += $quantity * $carPart.getPurchasePrice().doubleValue();),
+        result(new FinancialReportResponse(revenue, expenses, revenue - expenses))
+    )
+end
+
+query "Get Vehicle Report Query"
+    $vehicle: Vehicle($repairs: repairs)
+    $faults: Set(size >= 3) from accumulate (
+        Repair($fault: fault, performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(12))) from $repairs, collectSet($fault)
+    )
+
+    $fault: Fault() from $faults
+    Number(intValue >= 2) from accumulate(
+        Repair(fault != null, fault.name == $fault.name) from $repairs, count(1)
+    )
+end
+
+query "Get Customer Report Query"
+    $vehicle: Vehicle($vehicleRepairs: repairs, $customer: owner)
+    // TODO: Change to 4 after testing
+    $repairs: Set(size >= 2) from accumulate (
+        Repair($r: this, performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(24))) from $vehicleRepairs, collectSet($r)
+    )
+    // TODO: Change to 2000 after testing
+    $totalCost: Number(doubleValue >= 1470) from accumulate (
+        Repair($totalPrice: totalPrice) from $repairs, sum($totalPrice)
+    )
+end

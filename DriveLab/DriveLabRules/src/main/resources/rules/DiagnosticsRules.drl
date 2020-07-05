@@ -1,15 +1,22 @@
+package rules;
+
 import java.util.List;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import com.drivelab.core.model.Problem;
 import com.drivelab.core.model.Fault;
 import com.drivelab.core.model.FaultGroup;
 import com.drivelab.core.model.ProblemAndFault;
 import com.drivelab.core.model.FaultProbability;
 import com.drivelab.core.model.Repair;
+import com.drivelab.core.model.CarPart;
 import com.drivelab.core.dto.DiagnosticsRequest;
 import com.drivelab.core.dto.FaultResponse;
 import com.drivelab.core.dto.DiagnosticsResult;
 
 rule "Base Diagnostics Rule"
+    agenda-group "diagnostics"
     when
         DiagnosticsRequest($problems: problems)
         $vehicleProblems: List() from accumulate ($problem: Problem($name: name) from $problems, collectList($name))
@@ -18,7 +25,7 @@ rule "Base Diagnostics Rule"
 end
 
 rule "Diagnose Suspension And Steering System Faults Rule" extends "Base Diagnostics Rule"
-    salience 0
+    salience ((100 * $presentProblems) / $fault.getProblems().size())
     when
         $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.SUSPENSION_AND_STEERING_SYSTEM)
         $presentProblems: Number(intValue >= 3) from accumulate (
@@ -30,7 +37,7 @@ rule "Diagnose Suspension And Steering System Faults Rule" extends "Base Diagnos
 end
 
 rule "Diagnose Engine Faults Rule" extends "Base Diagnostics Rule"
-    salience 0
+    salience ((100 * $presentProblems) / $fault.getProblems().size())
     when
         $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.ENGINE)
         $presentProblems: Number(intValue >= $faultProblems.size) from accumulate (
@@ -42,7 +49,7 @@ rule "Diagnose Engine Faults Rule" extends "Base Diagnostics Rule"
 end
 
 rule "Diagnose Other Faults Rule" extends "Base Diagnostics Rule"
-    salience 0
+    salience ((100 * $presentProblems) / $fault.getProblems().size())
     when
         $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.OTHER)
         $presentProblems: Number(intValue >= 2) from accumulate (
@@ -57,7 +64,6 @@ rule "Diagnose Other Faults Rule" extends "Base Diagnostics Rule"
 end
 
 rule "Select Fault With Highest Probability Based On Problems Count Rule"
-    salience -1
     when
         $selectedFault: FaultProbability() from accumulate (
             $fault: FaultProbability($probability: probability, $problemsCount: fault.problems.size),

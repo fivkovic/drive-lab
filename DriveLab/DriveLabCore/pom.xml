@@ -90,6 +90,16 @@
             <artifactId>kie-spring</artifactId>
             <version>${kie.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-templates</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-invoker</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
         <!-- RULES LIBRARY -->
         <dependency>

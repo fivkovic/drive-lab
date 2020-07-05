@@ -2,7 +2,6 @@ package com.drivelab.core.controller;
 
 import com.drivelab.core.service.BaseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

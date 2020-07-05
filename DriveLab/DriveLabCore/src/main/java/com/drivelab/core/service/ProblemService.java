@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 public class ProblemService extends BaseService<Problem, Long> {
 
     @Autowired
-    protected ProblemService(JpaRepository<Problem, Long> ProblemRepository) { super(ProblemRepository); }
+    protected ProblemService(JpaRepository<Problem, Long> problemRepository) { super(problemRepository); }
 }

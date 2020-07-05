@@ -21,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.formLogin().disable();
         http.httpBasic().disable();
+        http.headers().frameOptions().sameOrigin();
         http.csrf().disable();
     }
 }

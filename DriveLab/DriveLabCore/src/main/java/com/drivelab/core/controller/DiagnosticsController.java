@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 import static com.drivelab.core.common.Constants.API.DIAGNOSTICS_ENDPOINT;
 
@@ -24,8 +25,8 @@ public class DiagnosticsController {
     private final DiagnosticsService diagnosticsService;
 
     @PostMapping
-    public ResponseEntity handlePostDiagnosisRequest(@RequestBody @Valid DiagnosticsRequest diagnosticsRequest) {
-
+    public ResponseEntity<DiagnosticsResult> handlePostDiagnosisRequest(@RequestBody @Valid DiagnosticsRequest diagnosticsRequest) {
+        diagnosticsRequest.setId(UUID.randomUUID());
         DiagnosticsResult diagnosticsResult = this.diagnosticsService.performDiagnostics(diagnosticsRequest);
 
         return ResponseEntity.ok(diagnosticsResult);
