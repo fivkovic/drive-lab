@@ -6,6 +6,7 @@ import com.drivelab.core.model.events.CarPartStockChangedEvent;
 import com.drivelab.core.repository.CarPartRepository;
 import org.kie.api.KieBase;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.EntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -40,7 +41,9 @@ public class CarPartsStockService {
         // CarPartPriceChangedEvent event = new CarPartPriceChangedEvent(carPart, getRandomBigDecimal(rangeMin, rangeMax));
 
         CarPartPriceChangedEvent event = new CarPartPriceChangedEvent(carPart, BigDecimal.valueOf(carPart.getPurchasePrice().doubleValue() * 1.21), "Supplier A");
-        kieSession.insert(event);
+
+        EntryPoint carPartPriceStream = kieSession.getEntryPoint("Car Part Price");
+        carPartPriceStream.insert(event);
 
         kieSession.getAgenda().getAgendaGroup("carPartsStock").setFocus();
         kieSession.fireAllRules();
@@ -52,7 +55,9 @@ public class CarPartsStockService {
         CarPart carPart = this.carPartRepository.findById(111L).get();
 
         CarPartStockChangedEvent event = new CarPartStockChangedEvent(carPart, -2);
-        kieSession.insert(event);
+
+        EntryPoint carPartStockStream = kieSession.getEntryPoint("Car Part Stock");
+        carPartStockStream.insert(event);
 
         kieSession.getAgenda().getAgendaGroup("carPartsStock").setFocus();
         kieSession.fireAllRules();

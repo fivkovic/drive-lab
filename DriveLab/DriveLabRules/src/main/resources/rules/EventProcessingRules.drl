@@ -8,11 +8,20 @@ global com.drivelab.core.service.CarPartsStockService carPartsStockService;
 
 declare window LatestCarPartPriceChangedEvent
 	CarPartPriceChangedEvent() over window:length(1)
+	from entry-point "Car Part Price"
 end
 
 declare window PriceDecreaseThresholdPeriod
 	CarPartPriceChangedEvent() over window:time(180m)
+	from entry-point "Car Part Price"
 end
+
+declare window LatestCarPartStockChangedEvent
+    @doc("Latest CarPartStockChangedEvent")
+	CarPartStockChangedEvent() over window:length(1)
+	from entry-point "Car Part Stock"
+end
+
 
 rule "Car Part Price Changed For Same Supplier Rule"
 agenda-group "carPartsStock"
@@ -65,7 +74,7 @@ end
 rule "Car Part Stock Changed Rule"
 agenda-group "carPartsStock"
     when
-        $event: CarPartStockChangedEvent($carPart: carPart, carPart.getStockLowerBound() >= carPart.getStockCount() + difference) over window:length(1)
+        $event: CarPartStockChangedEvent($carPart: carPart, carPart.getStockLowerBound() >= carPart.getStockCount() + difference) from window LatestCarPartStockChangedEvent
     then
         System.out.println(drools.getRule().getName());
         carPartsStockService.sendCarPartStockChangedNotification($event);
