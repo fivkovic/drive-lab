@@ -210,7 +210,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         final CarPart carPart108 = this.carPartRepository.save(new CarPart(null, "Tail light cover", CarPartType.UNIVERSAL, CarPartGroup.LIGHTING_SYSTEM, new BigDecimal(10), new BigDecimal(5), 5, 1));
         final CarPart carPart109 = this.carPartRepository.save(new CarPart(null, "Indicator light", CarPartType.UNIVERSAL, CarPartGroup.LIGHTING_SYSTEM, new BigDecimal(10), new BigDecimal(5), 5, 1));
         final CarPart carPart110 = this.carPartRepository.save(new CarPart(null, "Turn signal control", CarPartType.MODEL_SPECIFIC, CarPartGroup.LIGHTING_SYSTEM, new BigDecimal(100), new BigDecimal(50), 1, 0));
-        final CarPart carPart111 = this.carPartRepository.save(new CarPart(null, "ABS Sensor", CarPartType.MODEL_SPECIFIC, CarPartGroup.SENSORS, new BigDecimal(18), new BigDecimal(9), 0, 0));
+        final CarPart carPart111 = this.carPartRepository.save(new CarPart(null, "ABS Sensor", CarPartType.MODEL_SPECIFIC, CarPartGroup.SENSORS, new BigDecimal(18), new BigDecimal(9), 0, 2));
         final CarPart carPart112 = this.carPartRepository.save(new CarPart(null, "Airbag sensors", CarPartType.MODEL_SPECIFIC, CarPartGroup.SENSORS, new BigDecimal(73), new BigDecimal(36.5), 0, 0));
         final CarPart carPart113 = this.carPartRepository.save(new CarPart(null, "Automatic transmission speed sensor", CarPartType.MODEL_SPECIFIC, CarPartGroup.SENSORS, new BigDecimal(10), new BigDecimal(5), 0, 0));
         final CarPart carPart114 = this.carPartRepository.save(new CarPart(null, "Camshaft position sensor", CarPartType.MODEL_SPECIFIC, CarPartGroup.SENSORS, new BigDecimal(35), new BigDecimal(17.5), 0, 0));

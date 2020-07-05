@@ -1,6 +1,8 @@
+import com.drivelab.core.model.Problem;
+import com.drivelab.core.model.Fault;
+import com.drivelab.core.model.ProblemAndFault;
 import com.drivelab.core.model.Repair;
 import com.drivelab.core.model.Vehicle;
-import com.drivelab.core.model.Fault;
 import com.drivelab.core.model.UsedCarPart;
 import com.drivelab.core.dto.FinancialReportResponse;
 import java.math.BigDecimal;
@@ -11,6 +13,18 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+
+query "Get Faults By Problems Query"
+    $problems: List() from collect (Problem())
+    $namesOfProblems: List() from accumulate (Problem($name: name) from $problems, collectList($name))
+    $fault: Fault($faultProblems: problems)
+
+    $count: Number(intValue > 0) from accumulate (ProblemAndFault(problem.name memberOf $namesOfProblems) from $faultProblems, count(1))
+end
+
+query "Get Problems By Fault Query" (String faultName)
+    Fault($problems: problems, name == faultName)
+end
 
 query "Get Financial Report Query" (LocalDate periodStart, LocalDate periodEnd)
     $repairs: List(size > 0) from collect (
@@ -34,67 +48,26 @@ query "Get Financial Report Query" (LocalDate periodStart, LocalDate periodEnd)
     )
 end
 
-//query "Get Financial Report Query"
-//    $repair: Repair($usedParts: usedParts)
-//    $revenue: Number() from accumulate (
-//        UsedCarPart($ucp: this, $carPart: carPart, $quantity: count) from $usedParts,
-//        //$allUsedParts: collectList($ucp),
-//        init(double revenue = 0;),
-//        action(revenue += $quantity * $carPart.getSalesPrice().doubleValue(); System.out.println($carPart.getSalesPrice().doubleValue());),
-//        result(new BigDecimal(revenue))
-//    )
-//end
-
-
 query "Get Vehicle Report Query"
-    /* STEP 1: Get all repairs performed on the vehicle */
     $vehicle: Vehicle($repairs: repairs)
     $faults: Set(size >= 3) from accumulate (
-        Repair($fault: fault,
-               performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(12))
-           ) from $repairs, collectSet($fault)
+        Repair($fault: fault, performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(12))) from $repairs, collectSet($fault)
     )
 
-    /* STEP 2: Check how many repairs are present for each fault */
     $fault: Fault() from $faults
     Number(intValue >= 2) from accumulate(
-        Repair(fault != null,
-            fault.name == $fault.name
-            //
-        ) from $repairs,
-        count(1)
+        Repair(fault != null, fault.name == $fault.name) from $repairs, count(1)
     )
 end
-
-
-//query "Get Vehicle Report Query"
-//    /* STEP 1: Get all repairs performed on the vehicle */
-//    $vehicle: Vehicle($repairs: repairs)
-//    $faults: Set() from accumulate (
-//        Repair($fault: fault) from $repairs, collectSet($fault)
-//    )
-//
-//    /* STEP 2: Check how many repairs are present for each fault */
-//    $fault: Fault() from $faults
-//    Number(intValue > 1) from accumulate(
-//        Repair(fault != null,
-//            fault.name == $fault.name
-//            // performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(6))
-//        ) from $repairs,
-//        count(1)
-//    )
-//end
 
 query "Get Customer Report Query"
     $vehicle: Vehicle($vehicleRepairs: repairs, $customer: owner)
     // TODO: Change to 4 after testing
     $repairs: Set(size >= 2) from accumulate (
-        Repair($r: this, performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(24))) from $vehicleRepairs,
-        collectSet($r)
+        Repair($r: this, performedOn.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(LocalDate.now().minusMonths(24))) from $vehicleRepairs, collectSet($r)
     )
     // TODO: Change to 2000 after testing
     $totalCost: Number(doubleValue >= 1470) from accumulate (
-        Repair($totalPrice: totalPrice) from $repairs,
-        sum($totalPrice)
+        Repair($totalPrice: totalPrice) from $repairs, sum($totalPrice)
     )
 end

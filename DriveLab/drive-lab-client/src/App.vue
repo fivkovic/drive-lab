@@ -103,9 +103,7 @@ export default {
     logOut() {
       const callback = () => {
         this.$store.commit("setRepairShopRole", "");
-
-        // TODO: Add websocket handling here later
-
+        this.$store.commit("disconnectWebSocket");
         localStorage.clear();
         this.$router.push("/log-in");
       };
@@ -115,6 +113,18 @@ export default {
   },
   created() {
     const authenticatedUser = localStorage.getItem("authenticated-user");
+
+    const Toast = this.$swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', this.$swal.stopTimer)
+        toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+      },
+    })
     
     if (!authenticatedUser) {
       if(this.$router.currentRoute.name != "LogIn") {
@@ -122,8 +132,12 @@ export default {
       }
     } else {
       this.$store.commit("setRepairShopRole", JSON.parse(authenticatedUser).repairShopRole);
-
-      // TODO: Add websocket handling here later
+      this.$store.commit("connectWebSocket", message => {
+        Toast.fire({
+          icon: 'warning',
+          title: message
+        })
+      });
     }
   }
 }

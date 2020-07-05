@@ -1,0 +1,70 @@
+import com.drivelab.core.model.events.CarPartPriceChangedEvent;
+import com.drivelab.core.model.events.CarPartStockChangedEvent;
+import com.drivelab.core.service.CarPartsStockService;
+
+global com.drivelab.core.service.CarPartsStockService carPartsStockService;
+
+declare window LatestCarPartPriceChangedEvent
+	CarPartPriceChangedEvent() over window:length(1)
+end
+
+declare window PriceDecreaseThresholdPeriod
+	CarPartPriceChangedEvent() over window:time(180m)
+end
+
+rule "Car Part Price Changed For Same Supplier Rule"
+agenda-group "carPartsStock"
+salience ($occurences)
+    when
+        // STEP 1: Check if price of car part has went up by 20% for the same supplier
+        $event: CarPartPriceChangedEvent($carPart: carPart, newPrice.doubleValue() > carPart.getPurchasePrice().doubleValue() * 1.2, $supplier: supplier, processed == false) from window LatestCarPartPriceChangedEvent
+
+        // STEP 2: Check if there was no decrease of price by the same supplier in the last 3 hours
+        $occurences: Number(intValue == 0) from accumulate(
+            CarPartPriceChangedEvent(carPart.id == $carPart.id, supplier == $supplier, $newPrice: newPrice.doubleValue(), processed == false) from window PriceDecreaseThresholdPeriod,
+            init(int count = 0; double previous = 0.0;),
+            action(
+                if (previous == 0.0) previous = $newPrice;
+                if ($newPrice < previous) count++;
+                previous = $newPrice;
+            ),
+            result(count)
+        )
+    then
+        System.out.println(drools.getRule().getName());
+        modify($event) {setProcessed(true);}
+        carPartsStockService.sendCarPartPriceChangedNotification($carPart, $event);
+end
+
+rule "Car Part Price Changed Rule"
+agenda-group "carPartsStock"
+salience ($occurences / 3)
+    when
+        // STEP 1: Check if price of car part has went up by 20%
+        $event: CarPartPriceChangedEvent($carPart: carPart, newPrice.doubleValue() > carPart.getPurchasePrice().doubleValue() * 1.2, processed == false) from window LatestCarPartPriceChangedEvent
+
+        // STEP 2: Check if there was no decrease of price in the last 3 hours
+        $occurences: Number(intValue == 0) from accumulate(
+            CarPartPriceChangedEvent(carPart.id == $carPart.id, $newPrice: newPrice.doubleValue(), processed == false) from window PriceDecreaseThresholdPeriod,
+            init(int count = 0; double previous = 0.0;),
+            action(
+                if (previous == 0.0) previous = $newPrice;
+                if ($newPrice < previous) count++;
+                previous = $newPrice;
+            ),
+            result(count)
+        )
+    then
+        System.out.println(drools.getRule().getName());
+        modify($event) {setProcessed(true);}
+        carPartsStockService.sendCarPartPriceChangedNotification($carPart, $event);
+end
+
+rule "Car Part Stock Changed Rule"
+agenda-group "carPartsStock"
+    when
+        $event: CarPartStockChangedEvent($carPart: carPart, carPart.getStockLowerBound() >= carPart.getStockCount() + difference) over window:length(1)
+    then
+        System.out.println(drools.getRule().getName());
+        carPartsStockService.sendCarPartStockChangedNotification($event);
+end
