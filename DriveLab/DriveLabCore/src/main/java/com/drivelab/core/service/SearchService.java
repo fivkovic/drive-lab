@@ -27,7 +27,7 @@ public class SearchService {
 
     // TODO: Move this to separate service
     public void disposeKieSession(KieSession kieSession) {
-        kieSession.getFactHandles(factHandle -> !(factHandle instanceof Problem))
+        kieSession.getFactHandles(factHandle -> (factHandle instanceof Problem))
                 .forEach(kieSession::delete);
     }
 

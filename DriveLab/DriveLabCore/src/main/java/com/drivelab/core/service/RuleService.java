@@ -1,5 +1,6 @@
 package com.drivelab.core.service;
 
+import com.drivelab.core.dto.CustomRuleRequest;
 import com.drivelab.core.model.Rule;
 import com.drivelab.core.repository.RuleRepository;
 import com.drivelab.core.repository.StorageRepository;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,13 @@ public class RuleService {
         Rule savedRule = this.ruleRepository.save(rule);
         final String generatedRule = this.applyRuleTemplate(rule);
         this.storageRepository.save(rule.getId(), generatedRule);
+
+        MavenUtils.mavenCleanAndInstallRules();
+    }
+
+    @SneakyThrows
+    public void create(CustomRuleRequest rule) {
+        this.storageRepository.save(new Random().nextLong(), rule.getBody());
 
         MavenUtils.mavenCleanAndInstallRules();
     }

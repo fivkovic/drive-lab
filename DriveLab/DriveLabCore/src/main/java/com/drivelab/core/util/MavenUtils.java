@@ -16,7 +16,7 @@ public final class MavenUtils {
     public static void mavenCleanAndInstallRules() throws MavenInvocationException {
         LOGGER.info("Running mvn clean install...");
         InvocationRequest request = new DefaultInvocationRequest();
-        request.setPomFile( new File( "pom.xml" ) );
+        request.setPomFile( new File( "DriveLabRules\\pom.xml" ) );
         request.setGoals( Arrays.asList( "clean", "install" ) );
 
         Invoker invoker = new DefaultInvoker();

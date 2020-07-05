@@ -19,6 +19,7 @@ import CustomerReport from '../views/reports/CustomerReport.vue'
 import VehicleReport from '../views/reports/VehicleReport.vue'
 import Notifications from '../views/notifications/Notifications.vue'
 import AddRulesTemplateBased from '../views/rules/AddRulesTemplateBased.vue'
+import AddRulesCustom from '../views/rules/AddRulesCustom.vue'
 
 Vue.use(VueRouter)
 
@@ -128,7 +129,15 @@ const routes = [
     }
   },
   {
-    path: '/new-repair',
+    path: '/new-repair/',
+    name: 'New Repair',
+    component: NewRepair,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'REPAIR_SHOP');
+    }
+  },
+  {
+    path: '/new-repair/:vehicleId',
     name: 'New Repair',
     component: NewRepair,
     beforeEnter: (to, from, next) => {
@@ -187,6 +196,14 @@ const routes = [
     path: '/add-rules-template-based',
     name: 'Add Rules Template Based',
     component: AddRulesTemplateBased,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'HEADQUARTER');
+    }
+  },
+  {
+    path: '/add-rules-custom',
+    name: 'Add Rules Custom',
+    component: AddRulesCustom,
     beforeEnter: (to, from, next) => {
       next(getRepairShopRole() == 'HEADQUARTER');
     }

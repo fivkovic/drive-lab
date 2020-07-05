@@ -191,7 +191,4 @@ export default {
   #content-left {
     padding-right: 5%;
   }
-  #content-right {
-    padding-left: 5%;
-  }
 </style>
