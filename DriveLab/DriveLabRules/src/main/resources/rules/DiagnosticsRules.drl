@@ -62,8 +62,6 @@ rule "Diagnose Other Faults Rule" extends "Base Diagnostics Rule"
 end
 
 rule "Select Fault With Highest Probability Based On Problems Count Rule"
-    agenda-group "diagnostics"
-    salience -100
     when
         $selectedFault: FaultProbability() from accumulate (
             $fault: FaultProbability($probability: probability, $problemsCount: fault.problems.size),

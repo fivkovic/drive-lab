@@ -53,11 +53,18 @@ public class DiagnosticsService {
         vehicle.getRepairs().forEach(kieSession::insert);
 
         // STEP 4: Execute rules
+        kieSession.getAgenda().getAgendaGroup("selection").setFocus();
+        kieSession.getAgenda().getAgendaGroup("diagnostics").setFocus();
+        kieSession.getAgenda().getAgendaGroup("update").setFocus();
+        kieSession.getAgenda().getAgendaGroup("history").setFocus();
         kieSession.fireAllRules();
 
         // STEP 5: Get diagnostics result
         final Collection<?> kieSessionObjects = kieSession.getObjects(object -> object instanceof DiagnosticsResult);
-        if (kieSessionObjects == null || kieSessionObjects.isEmpty()) throw new NotFoundException("Diagnostic session returned 0 results.");
+        if (kieSessionObjects == null || kieSessionObjects.isEmpty()) {
+            this.disposeKieSession(kieSession);
+            throw new NotFoundException("Diagnostic session returned 0 results.");
+        }
 
         // STEP 6: Cast from object to DiagnosticsResult instance
         final DiagnosticsResult diagnosticsResult = kieSessionObjects.stream()

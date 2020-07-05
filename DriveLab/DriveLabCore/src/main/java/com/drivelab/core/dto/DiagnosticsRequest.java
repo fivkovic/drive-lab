@@ -3,17 +3,21 @@ package com.drivelab.core.dto;
 import com.drivelab.core.model.Problem;
 import com.drivelab.core.model.Vehicle;
 import lombok.*;
+import org.kie.api.definition.type.PropertyReactive;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class DiagnosticsRequest {
+
+    private UUID id;
 
     @NotNull
     private Vehicle vehicle;
@@ -32,4 +36,9 @@ public class DiagnosticsRequest {
     @Max(10000000)
     // TODO: Integrate
     private Integer currentVehicleMileage;
+
+    @SuppressWarnings("unused")
+    public void updateProblemsWith(Problem problem) {
+        this.problems.add(problem);
+    }
 }
