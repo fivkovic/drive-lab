@@ -18,6 +18,7 @@ import FinancialReport from '../views/reports/FinancialReport.vue'
 import CustomerReport from '../views/reports/CustomerReport.vue'
 import VehicleReport from '../views/reports/VehicleReport.vue'
 import Notifications from '../views/notifications/Notifications.vue'
+import AddRulesTemplateBased from '../views/rules/AddRulesTemplateBased.vue'
 
 Vue.use(VueRouter)
 
@@ -43,7 +44,7 @@ const routes = [
     name: 'Home',
     component: Home,
     beforeEnter: (to, from, next) => {
-      next(getRepairShopRole() == 'REPAIR_SHOP');
+      next(getRepairShopRole() == 'REPAIR_SHOP' || getRepairShopRole() == 'HEADQUARTER');
     }
   },
   {
@@ -179,7 +180,15 @@ const routes = [
     name: 'Notifications',
     component: Notifications,
     beforeEnter: (to, from, next) => {
-      next(getRepairShopRole() == 'REPAIR_SHOP');
+      next(getRepairShopRole() == 'REPAIR_SHOP' || getRepairShopRole() == 'HEADQUARTER');
+    }
+  },
+  {
+    path: '/add-rules-template-based',
+    name: 'Add Rules Template Based',
+    component: AddRulesTemplateBased,
+    beforeEnter: (to, from, next) => {
+      next(getRepairShopRole() == 'HEADQUARTER');
     }
   },
 ]

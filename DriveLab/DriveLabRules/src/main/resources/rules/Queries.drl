@@ -1,3 +1,5 @@
+package rules;
+
 import com.drivelab.core.model.Problem;
 import com.drivelab.core.model.Fault;
 import com.drivelab.core.model.ProblemAndFault;

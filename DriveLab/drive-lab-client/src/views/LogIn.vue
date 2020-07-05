@@ -65,6 +65,13 @@ export default {
           icon: 'success',
           title: 'Logged in successfully'
         })
+        
+        this.$store.commit("connectWebSocket", message => {
+          Toast.fire({
+            icon: 'warning',
+            title: message
+          })
+        });
 
         // TODO: Handle different roles routing
         

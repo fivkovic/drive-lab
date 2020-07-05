@@ -1,0 +1,28 @@
+template header
+
+id
+ruleName
+faultGroup
+problemsCount
+
+
+package rules;
+
+import com.drivelab.core.model.*;
+import java.util.List;
+
+template "general-rule-template"
+
+rule "@{id}-@{ruleName}" extends "Base Diagnostics Rule"
+    salience ((100 * $presentProblems) / $fault.getProblems().size())
+    when
+        $fault: Fault($faultProblems: problems, faultGroup == FaultGroup.@{faultGroup})
+        $presentProblems: Number(intValue >= @{problemsCount}) from accumulate (
+            ProblemAndFault($vehicleProblems contains problem.name) from $faultProblems, count(1)
+        )
+    then
+        System.out.println("Diagnosed fault " + $fault.getName() + " (" + $presentProblems + "/" + $fault.getProblems().size() + " problems present)");
+        insert(new FaultProbability($fault, new Double($presentProblems.doubleValue() / $fault.getProblems().size())));
+end
+
+end template

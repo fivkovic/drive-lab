@@ -1,3 +1,5 @@
+package rules;
+
 import com.drivelab.core.model.events.CarPartPriceChangedEvent;
 import com.drivelab.core.model.events.CarPartStockChangedEvent;
 import com.drivelab.core.service.CarPartsStockService;

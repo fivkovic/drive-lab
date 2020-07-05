@@ -9,7 +9,6 @@
         <b-collapse is-nav id="nav_collapse">
 
           <b-navbar-nav>
-            <!-- TODO: Add routes for CRUD -->
 
             <b-nav-item-dropdown v-if="isClassicRepairShop()" text="Customers" left>
               <template v-slot:button-content>
@@ -56,10 +55,53 @@
               <b-dropdown-item v-if="isClassicRepairShop()" to="/vehicle-report" class="mb-2">Vehicle Report</b-dropdown-item>
             </b-nav-item-dropdown>
 
+            
+
+
+            <b-nav-item-dropdown v-if="isHeadquarters()" text="Add Rules" left>
+              <template v-slot:button-content>
+                <b-icon icon="gear" class="ml-2 mr-1"></b-icon>Add Rules
+              </template> 
+              <b-dropdown-item v-if="isHeadquarters()" to="/add-rules-template-based" class="mb-2">Template-based</b-dropdown-item>
+              <b-dropdown-item v-if="isHeadquarters()" to="/add-rules-custom" class="mb-2">Custom</b-dropdown-item>
+            </b-nav-item-dropdown>
+
+            <b-nav-item-dropdown v-if="isHeadquarters()" text="Faults" left>
+              <template v-slot:button-content>
+                <b-icon icon="exclamation-triangle" class="ml-1 mr-1"></b-icon>Faults
+              </template> 
+              <b-dropdown-item v-if="isHeadquarters()" to="/add-fault" class="mb-2">Add Fault</b-dropdown-item>
+            </b-nav-item-dropdown>
+            
+            <b-nav-item-dropdown v-if="isHeadquarters()" text="Problems" left>
+              <template v-slot:button-content>
+                <b-icon icon="clipboard-data" class="ml-1 mr-1"></b-icon>Problems
+              </template> 
+              <b-dropdown-item v-if="isHeadquarters()" to="/add-problem" class="mb-2">Add Problem</b-dropdown-item>
+            </b-nav-item-dropdown>
+
+            <b-nav-item-dropdown v-if="isHeadquarters()" text="Car Parts" left>
+              <template v-slot:button-content>
+                <b-icon icon="tools" class="ml-1 mr-1"></b-icon>Car Parts
+              </template> 
+              <b-dropdown-item v-if="isHeadquarters()" to="/car-parts" class="mb-2">Overview</b-dropdown-item>
+              <b-dropdown-item v-if="isHeadquarters()" to="/add-car-part" class="mb-2">Add Car Part</b-dropdown-item>
+              <b-dropdown-item v-if="isHeadquarters()" to="/car-part-details" class="mb-2">Car Part Details</b-dropdown-item>
+            </b-nav-item-dropdown>
+
+            
+            <b-nav-item-dropdown v-if="isHeadquarters()" text="Repair Shops" left>
+              <template v-slot:button-content>
+                <b-icon icon="shop" class="ml-1 mr-2"></b-icon>Repair Shops
+              </template> 
+              <b-dropdown-item v-if="isHeadquarters()" to="/repair-shops" class="mb-2">Overview</b-dropdown-item>
+              <b-dropdown-item v-if="isHeadquarters()" to="/add-new-repair-shop" class="mb-2">Add New Repair Shop</b-dropdown-item>
+            </b-nav-item-dropdown>
+
           </b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
-            <b-nav-item v-if="isClassicRepairShop()" to="/notifications" class="mt-2">
+            <b-nav-item v-if="isAuthenticated()" to="/notifications" class="mt-2">
               <span>
                 <b-icon icon="bell" class="ml-1 mr-2"></b-icon>Notifications
               </span>  

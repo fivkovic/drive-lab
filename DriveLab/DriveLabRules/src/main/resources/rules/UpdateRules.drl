@@ -1,3 +1,5 @@
+package rules;
+
 import com.drivelab.core.model.FactUpdate;
 import com.drivelab.core.dto.DiagnosticsRequest;
 

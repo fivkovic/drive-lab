@@ -29,7 +29,7 @@ public enum FaultGroup {
     private final String name;
 
     FaultGroup(int code, String name) {
-        if (code < 1 || code > 3)
+        if (code < 0 || code > 19)
             throw new IllegalArgumentException("code");
         if (name == null || name.trim().length() == 0)
             throw new IllegalArgumentException("name");
@@ -48,7 +48,7 @@ public enum FaultGroup {
     }
 
     public static FaultGroup fromValue(int value) throws IndexOutOfBoundsException {
-        if (value < 1 || value > 3)
+        if (value < 0 || value > 19)
             throw new IndexOutOfBoundsException("value");
         for (FaultGroup faultGroup : FaultGroup.values())
             if (faultGroup.getCode() == value)

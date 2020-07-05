@@ -1,5 +1,6 @@
 package com.drivelab.core.config;
 
+import org.drools.template.ObjectDataCompiler;
 import org.kie.api.KieBase;
 import org.kie.api.KieBaseConfiguration;
 import org.kie.api.KieServices;
@@ -33,5 +34,10 @@ public class KieConfiguration {
         kieScanner.start(5000);
 
         return kieContainer.newKieBase(kieBaseConfig);
+    }
+
+    @Bean
+    public ObjectDataCompiler objectDataCompiler() {
+        return new ObjectDataCompiler();
     }
 }
